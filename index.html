@@ -194,6 +194,28 @@
       footer a:hover {
         text-decoration: underline;
       }
+
+      .marquee {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+  
+      .marquee span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: scroll-text 10s linear infinite;
+      }
+  
+      @keyframes scroll-text {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
     </style>
   </head>
   <body>
@@ -217,10 +239,12 @@
           </ul>
         </div>
       
-        <a href="others/signup.html">Sign Up</a>
+        <a href="signup.html">Sign Up</a>
       </div>
     </header>
-
+    <div class="marquee">
+      <span>Special discounts on rare items! Start bidding now and discover treasures you’ll love!</span>
+    </div>
     <!-- Hero Section -->
     <section class="hero">
       <h1>Discover Unique Finds<br />and Rare Treasures</h1>
@@ -231,7 +255,7 @@
       <a href="bidding.html"><button>Start Bidding Now</button></a>
       <a href="addproduct.html"><button>   Add a product  </button></a>
     </section>
-
+    
     <!-- Categories Section -->
     <section class="categories" id="categories">
       <h2>Shop by Top Categories</h2>
@@ -262,6 +286,10 @@
         </div>
       </div>
     </section>
+
+    <p>At BidBazaar, we are passionate about connecting buyers and sellers in a dynamic and engaging auction platform.
+     Our mission is to create a marketplace where unique treasures, antique collectibles, and rare
+      finds can be discovered, bid upon, and cherished by enthusiasts from all walks of life</p>
 
     <!-- Customer Reviews Section -->
     <section class="reviews" id="reviews">
