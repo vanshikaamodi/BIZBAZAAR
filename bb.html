@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidBazaar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header */
+        header {
+            background-color: #d1e0f2;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        header input {
+            padding: 8px;
+            width: 50%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        header .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        header .user-actions span {
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #e6e8d9;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: #8b1e2b;
+            font-size: 48px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        /* Categories */
+        .categories {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .categories h2 {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .categories .circle-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .categories .circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+
+        .categories img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .categories p {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Navigation Dots */
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: #ccc;
+        }
+
+        .dots span.active {
+            background-color: #d66030;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">BidBazaar</div>
+        <input type="text" placeholder="Search for a product or auction">
+        <div class="user-actions">
+            <span> Help & Contact </span>
+
+             <a href="login.html">  sign up </a>
+            <span>🛒</span>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>buy, sell <br>and collect</h1>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="dots">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h2>Shop by Top Categories</h2>
+        <div class="circle-container">
+            <div>
+                <div class="circle">
+                    <img src="https://via.placeholder.com/120?text=Jewelry" alt="Jewelry">
+                </div>
+                <p>JEWELRY</p>
+            </div>
+            <div>
+                <div class="circle">
+                    <img src="https://via.placeholder.com/120?text=Telephones" alt="Telephones">
+                </div>
+                <p>TELEPHONES</p>
+            </div>
+            <div>
+                <div class="circle">
+                    <img src="https://via.placeholder.com/120?text=Home+Decor" alt="Home Decor">
+                </div>
+                <p>HOME DECOR</p>
+            </div>
+            <div>
+                <div class="circle">
+                    <img src="https://via.placeholder.com/120?text=Accessories" alt="Accessories">
+                </div>
+                <p>ACCESSORIES</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

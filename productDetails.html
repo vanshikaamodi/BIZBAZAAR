@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Auction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .timer {
+            font-size: 18px;
+            color: #d9534f;
+        }
+        .product-details {
+            display: flex;
+            margin-top: 20px;
+        }
+        .product-image {
+            flex: 1;
+            max-width: 300px;
+            margin-right: 20px;
+        }
+        .product-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .product-info {
+            flex: 2;
+        }
+        .product-description {
+            margin-top: 10px;
+        }
+        .bid-section {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+        .bid-section input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .place-bid-button {
+            margin-top: 10px;
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .place-bid-button:hover {
+            background: #0056b3;
+        }
+    </style>
+    <script>
+        function startCountdown(endTime) {
+            const timerElement = document.getElementById('timer');
+
+            function updateTimer() {
+                const now = new Date().getTime();
+                const timeLeft = endTime - now;
+
+                if (timeLeft > 0) {
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                    timerElement.textContent = `${hours}h ${minutes}m ${seconds}s remaining`;
+                } else {
+                    timerElement.textContent = "Auction Ended";
+                    clearInterval(timerInterval);
+                }
+            }
+
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const auctionEndTime = new Date().getTime() + 5 * 60 * 1000; // 5 minutes from now
+            startCountdown(auctionEndTime);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="product-header">
+            <div class="product-title">Vintage Vase</div>
+            <div class="timer" id="timer">Loading...</div>
+        </div>
+
+        <div class="product-details">
+            <div class="product-image">
+                <img src="https://via.placeholder.com/300" alt="Vintage Vase">
+            </div>
+            <div class="product-info">
+                <p><strong>Starting Price:</strong> $100</p>
+                <p><strong>Current Bid:</strong> $150</p>
+                <div class="product-description">
+                    <p>This exquisite vintage vase is a rare collectible from the early 20th century. Perfect for antique enthusiasts.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bid-section">
+            <p><strong>Place Your Bid:</strong></p>
+            <input type="number" placeholder="Enter your bid amount" min="150">
+            <button class="place-bid-button">Place Bid</button>
+        </div>
+    </div>
+</body>
+</html>

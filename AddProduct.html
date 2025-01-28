@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product for Auction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:#76ABAE ;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #f0eee3;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #281717;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: 281717;
+        }
+        input, textarea, button, select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #3f4142;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3f4142;
+        }
+        .info {
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Product for Auction</h1>
+        <form id="auctionForm" enctype="multipart/form-data">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" placeholder="Enter the product name" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" placeholder="Provide a detailed description" required></textarea>
+
+            <label for="image">Upload Product Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <label for="authProof">Proof of Authenticity (PDF or Image):</label>
+            <input type="file" id="authProof" name="authProof" accept=".pdf, image/*" required>
+
+            <label for="auctionDuration">Auction Duration:</label>
+            <select id="auctionDuration" name="auctionDuration" required>
+                <option value="">Select duration</option>
+                <option value="1">1 Day</option>
+                <option value="7">1 Week</option>
+                <option value="30">1 Month</option>
+                <option value="90">3 Months (Max)</option>
+            </select>
+            <div class="info">* The maximum auction duration is 3 months.</div>
+             <a href="AuctionSummary.html"> <button type="submit" >Submit Product </button> </a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('auctionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const productName = document.getElementById('productName').value;
+            const auctionDuration = document.getElementById('auctionDuration').value;
+            if (auctionDuration === "") {
+                alert("Please select a valid auction duration.");
+                return;
+            }
+            alert(`${productName} submitted for an auction lasting ${auctionDuration} days!`);
+        });
+    </script>
+</body>
+</html>

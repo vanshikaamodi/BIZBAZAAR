@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidBazaar - Home Decor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body bgcolor="#f0eee3">
+    <header class="bg-white shadow">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">BidBazaar - Home Decor</h1>
+            <nav>
+                <a href="/" class="text-gray-600 hover:text-gray-800 mx-2">Home</a>
+                <a href="/categories" class="text-gray-600 hover:text-gray-800 mx-2">Categories</a>
+                <a href="/auctions" class="text-gray-600 hover:text-gray-800 mx-2">Auctions</a>
+                <a href="/contact" class="text-gray-600 hover:text-gray-800 mx-2">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Home Decor Items</h2>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sort: Ending Soon</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Item 1 -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <img src="https://via.placeholder.com/300x200" alt="Item Image" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold text-gray-800">Vintage Wooden Lamp</h3>
+                    <p class="text-sm text-gray-600">Location: New York, NY</p>
+                    <p class="text-sm text-gray-600">Ends: Tue, Jan 14, 10:02 AM</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="text-gray-800 font-bold">$50</span>
+                        <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <img src="https://via.placeholder.com/300x200" alt="Item Image" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold text-gray-800">Decorative Wall Art</h3>
+                    <p class="text-sm text-gray-600">Location: Los Angeles, CA</p>
+                    <p class="text-sm text-gray-600">Ends: Tue, Jan 14, 10:04 AM</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="text-gray-800 font-bold">$75</span>
+                        <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <img src="https://via.placeholder.com/300x200" alt="Item Image" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold text-gray-800">Modern Ceramic Vase</h3>
+                    <p class="text-sm text-gray-600">Location: Chicago, IL</p>
+                    <p class="text-sm text-gray-600">Ends: Tue, Jan 14, 10:06 AM</p>
+                    <div class="mt-2 flex justify-between items-center">
+                        <span class="text-gray-800 font-bold">$30</span>
+                        <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Bid Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        </div>
+    </footer>
+</body>
+</html> 
