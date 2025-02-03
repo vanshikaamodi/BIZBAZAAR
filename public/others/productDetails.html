@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Auctions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background:#76ABAE ;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            display: flex;
+            margin: 20px;
+        }
+
+        aside {
+            width: 25%;
+            padding: 20px;
+            background: #fff;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+
+        .auction-listings {
+            width: 75%;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+
+        .auction-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .auction-item h3 {
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background:#76ABAE ;
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recent Auctions</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Auctions</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <aside>
+            <h2>Filters</h2>
+            <form>
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="all">All</option>
+                    <option value="art">Art</option>
+                    <option value="collectibles">Collectibles</option>
+                    <option value="electronics">Electronics</option>
+                </select>
+
+                <label for="price">Price Range:</label>
+                <input type="text" id="price" placeholder="Max Price">
+
+                <button type="submit">Apply Filters</button>
+            </form>
+        </aside>
+
+        <section class="auction-listings">
+            <h2>Current Auctions</h2>
+            <div class="auction-item">
+                <h3>Auction Title 1</h3>
+                <p>Description of auction item 1.</p>
+                <p>Start Date: 2023-10-01</p>
+                <p>End Date: 2023-10-10</p>
+                <p>Current Bid: $100</p>
+                <a href="#">View Auction</a>
+            </div>
+            <div class="auction-item">
+                <h3>Auction Title 2</h3>
+                <p>Description of auction item 2.</p>
+                <p>Start Date: 2023-10-05</p>
+                <p>End Date: 2023-10-15</p>
+                <p>Current Bid: $200</p>
+                <a href="#">View Auction</a>
+            </div>
+            <!-- Add more auction items as needed -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Auction House. All rights reserved.</p>
+        <p><a href="#" style="color: #fff;">Privacy Policy</a> | <a href="#" style="color: #fff;">Terms & Conditions</a></p>
+    </footer>
+</body>
+</html>
