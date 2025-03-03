@@ -28,14 +28,34 @@
         }
         .profile-info {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             margin-bottom: 30px;
+        }
+        .profile-pic-container {
+            position: relative;
+            width: 150px;
         }
         .profile-info img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             border: 3px solid #ccc;
+            display: block;
+        }
+        .upload-btn {
+            display: block;
+            margin-top: 10px;
+            background-color: #76ABAE;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+        .upload-btn:hover {
+            background-color: #76ABAE;
         }
         .info {
             flex: 1;
@@ -52,17 +72,19 @@
             display: flex;
             justify-content: flex-start;
         }
-        .action-buttons a {
-            background-color: #4CAF50;
+        .action-buttons button {
+            background-color:#76ABAE ;
             color: white;
             padding: 10px 20px;
             margin-right: 10px;
+            border: none;
             border-radius: 4px;
-            text-decoration: none;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
-        .action-buttons a:hover {
-            background-color: #45a049;
+        .action-buttons button:hover {
+            background-color: #76ABAE;
+            padding: 10px 20px;
         }
         .auction-list {
             margin-top: 40px;
@@ -79,6 +101,9 @@
         .auction-list th {
             background-color: #f4f4f4;
         }
+        input[type="file"] {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -86,61 +111,93 @@
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-            <h1>Welcome to Your Profile, John Doe!</h1>
+            <h1 id="profile-name">Welcome to Your Profile</h1>
         </div>
 
         <!-- Profile Information Section -->
         <div class="profile-info">
-            <img src="profile-pic.jpg" alt="Profile Picture">
+            <div class="profile-pic-container">
+                <img id="profile-pic" src="profile-pic.jpg" alt="Profile Picture">
+                <label class="upload-btn">
+                    Change Photo
+                    <input type="file" id="upload-photo" accept="image/*" onchange="changeProfilePhoto(event)">
+                </label>
+            </div>
             <div class="info">
                 <h2>Personal Information</h2>
-                <p><strong>Email:</strong> johndoe@example.com</p>
-                <p><strong>Role:</strong> Buyer</p>
-                <p><strong>Member Since:</strong> January 2022</p>
-                <p><strong>Location:</strong> New York, USA</p>
+                <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                <p><strong>Role:</strong> <span id="profile-role">Buyer</span></p>
+                <p><strong>Member Since:</strong></p>
+                <p><strong>Location:</strong> <span id="profile-location"></span></p>
 
                 <div class="action-buttons">
-                    <a href="#">Edit Profile</a>
-                    <a href="#">Change Password</a>
+                    <button onclick="editProfile()">Edit Profile</button> &nbsp;
+                    
                 </div>
             </div>
         </div>
 
-        <!-- Auction List Section -->
-        <div class="auction-list">
-            <h2>Your Active Auctions</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Auction Title</th>
-                        <th>Status</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Antique Vase</td>
-                        <td>Active</td>
-                        <td>2025-02-01</td>
-                        <td>2025-02-10</td>
-                    </tr>
-                    <tr>
-                        <td>Rare Painting</td>
-                        <td>Closed</td>
-                        <td>2025-01-20</td>
-                        <td>2025-02-01</td>
-                    </tr>
-                    <tr>
-                        <td>Vintage Watch</td>
-                        <td>Active</td>
-                        <td>2025-02-05</td>
-                        <td>2025-02-15</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+       
+
+    <script>
+        // Load profile data from localStorage (if available)
+        function loadProfile() {
+            let profile = JSON.parse(localStorage.getItem('profile')) || {
+                name: "John Doe",
+                email: "johndoe@example.com",
+                role: "Buyer",
+                location: "New York, USA",
+                photo: "profile-pic.jpg"
+            };
+
+            document.getElementById('profile-name').innerText = `Welcome to Your Profile, ${profile.name}!`;
+            document.getElementById('profile-email').innerText = profile.email;
+            document.getElementById('profile-role').innerText = profile.role;
+            document.getElementById('profile-location').innerText = profile.location;
+            document.getElementById('profile-pic').src = profile.photo;
+        }
+
+        // Edit profile function
+        function editProfile() {
+            let profile = JSON.parse(localStorage.getItem('profile')) || {};
+
+            let newName = prompt("Enter your new name:", profile.name);
+            let newEmail = prompt("Enter your new email:", profile.email);
+            let newRole = prompt("Enter your role (Buyer/Seller):", profile.role);
+            let newLocation = prompt("Enter your new location:", profile.location);
+
+            if (newName && newEmail && newRole && newLocation) {
+                profile.name = newName;
+                profile.email = newEmail;
+                profile.role = newRole;
+                profile.location = newLocation;
+
+                localStorage.setItem('profile', JSON.stringify(profile));
+                loadProfile(); // Update UI with new data
+            }
+        }
+
+        // Change Profile Photo
+        function changeProfilePhoto(event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let profile = JSON.parse(localStorage.getItem('profile')) || {};
+                    profile.photo = e.target.result;
+                    localStorage.setItem('profile', JSON.stringify(profile));
+                    loadProfile();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadProfile);
+    </script>
+
+    <button onclick="location.assign('chatbot.html')">chatbot</button>
+
+
 
 </body>
 </html>

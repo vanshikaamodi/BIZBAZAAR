@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auction Listings Page</title>
+  <style>
+
+    /* header {
+      background-color: #76ABAE;
+    } */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0eee3;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      
+
+    }
+.head {
+  background-color: #76ABAE;
+}
+    .title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .filters input,
+    .filters select {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .auction-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #f0eee3;
+      padding: 1rem;
+      border: 5px solid #76ABAE;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .card img {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 8px;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: #555;
+    }
+
+    .place-bid-button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #76ABAE;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .place-bid-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <!-- <header> <h1 class="title">Auction Listings</h1> </header> -->
+</head>
+<body>
+  <div class="container">
+    
+    <div class="head">
+     <h1>BidBazaar</h1>
+    <h1 class="title">Auction Listings</h1>
+</div>
+ 
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Search auctions...">
+      <select id="category-filter">
+        <option value="">All Categories</option>
+        <option value="Antique">Antique</option>
+        <option value="Collectibles">Collectibles</option>
+        <option value="Luxury">Luxury</option>
+      </select>
+      <select id="sort-option">
+        <option value="">Sort By</option>
+        <option value="price">Price</option>
+        <option value="timeLeft">Time Left</option>
+        <option value="popularity">Popularity</option>
+      </select>
+    </div>
+
+    <div class="auction-list" id="auction-list"></div>
+  </div>
+
+  <script>
+    const auctions = [
+      { id: 1, title: "Vintage Vase", price: "Rs.12000", category: "Antique", timeLeft: "2h 30m", imageUrl: "../image/vase.jpeg" },
+      { id: 2, title: "Rare Coin", price: "Rs.1000", category: "Collectibles", timeLeft: "5h 15m", imageUrl: "../image/rare coins.jpeg" },
+      { id: 3, title: "Antique Lamp", price: "Rs.200", category: "Antique", timeLeft: "1h 45m", imageUrl: "../image/lamp.jpg" },
+      { id: 4, title: "Designer Watch", price: "Rs.5,500", category: "Luxury", timeLeft: "3h 10m", imageUrl: "../image/watch.webp" },
+    ];
+
+    const auctionList = document.getElementById('auction-list');
+    const searchInput = document.getElementById('search');
+    const categoryFilter = document.getElementById('category-filter');
+    const sortOption = document.getElementById('sort-option');
+
+    function displayAuctions(auctionData) {
+      auctionList.innerHTML = '';
+      auctionData.forEach(auction => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        card.innerHTML = `
+          <img src="${auction.imageUrl}" alt="${auction.title}">
+          <div class="card-content">
+            <h2>${auction.title}</h2>
+            <p>Price: ${auction.price}</p>
+            <p>Category: ${auction.category}</p>
+            <p>Time Left: ${auction.timeLeft}</p>
+            <button class="place-bid-button">Place Bid</button>
+          </div>
+        `;
+
+        auctionList.appendChild(card);
+      });
+    }
+
+    function filterAndSortAuctions() {
+      let filteredAuctions = auctions.filter(auction =>
+        auction.title.toLowerCase().includes(searchInput.value.toLowerCase()) &&
+        (categoryFilter.value === '' || auction.category === categoryFilter.value)
+      );
+
+      if (sortOption.value === 'price') {
+        filteredAuctions.sort((a, b) => parseFloat(a.price.replace(/\$/g, '')) - parseFloat(b.price.replace(/\$/g, '')));
+      } else if (sortOption.value === 'timeLeft') {
+        filteredAuctions.sort((a, b) => a.timeLeft.localeCompare(b.timeLeft));
+      } else if (sortOption.value === 'popularity') {
+        filteredAuctions.sort((a, b) => b.id - a.id); // Simple placeholder for popularity sorting
+      }
+
+      displayAuctions(filteredAuctions);
+    }
+
+    searchInput.addEventListener('input', filterAndSortAuctions);
+    categoryFilter.addEventListener('change', filterAndSortAuctions);
+    sortOption.addEventListener('change', filterAndSortAuctions);
+
+    // Initial render
+    displayAuctions(auctions);
+  </script>
+</body>
+</html>

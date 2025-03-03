@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CustomCraft</title>
+    <style>
+        body {
+            font-family: 'Urbanist', sans-serif; /* Use a custom font if available */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f6e7da; /* Soft background color */
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px ;
+            padding-right: 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px ; /* Fixed width for better alignment */
+            /* height: 400px; */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333; /* Darker text for better readability */
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff973c; /* Highlight border on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        button {
+            background-color: #ff973c; /* Custom button color */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #f68d45; /* Darker shade on hover */
+            transform: scale(1.05); /* Slightly enlarge button on hover */
+        }
+
+        p {
+            margin-top: 15px;
+            color: #666; /* Lighter text for secondary information */
+        }
+
+        a {
+            color: #ff973c; /* Link color */
+            text-decoration: none; /* Remove underline */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        #loginMessage {
+            margin-top: 15px;
+            color: red; /* Error message color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+        <p id="loginMessage"></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+            document.getElementById("loginMessage").innerText = data.message;
+
+            if (response.ok) {
+                localStorage.setItem("token", data.token); // Store JWT Token
+                setTimeout(() => window.location.href = "index.html", 2000);
+            }
+        });
+    </script>
+</body>
+</html>

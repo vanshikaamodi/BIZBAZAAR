@@ -1,0 +1,95 @@
+// Initialize Lucide icons
+lucide.createIcons();
+
+// Sample cart data
+let cartItems = [
+    {
+        id: 1,
+        name: "Vintage Rolex Submariner",
+        price: 8999.99,
+        originalPrice: 10999.99,
+        quantity: 1,  // quantity is kept for calculation, but not displayed
+        image: "/api/placeholder/100/100",
+        seller: "Luxury Time Pieces",
+        condition: "Excellent"
+    },
+    {
+        id: 2,
+        name: "Ming Dynasty Vase",
+        price: 4589.99,
+        originalPrice: 5000.00,
+        quantity: 1,  // quantity is kept for calculation, but not displayed
+        image: "/api/placeholder/100/100",
+        seller: "Asian Antiques Co",
+        condition: "Good"
+    }
+];
+
+const SHIPPING_COST = 29.99;
+
+// Render cart items
+function renderCart() {
+    const cartContainer = document.getElementById('cartItems');
+    const emptyCart = document.getElementById('emptyCart');
+    
+    if (cartItems.length === 0) {
+        cartContainer.style.display = 'none';
+        emptyCart.style.display = 'block';
+        return;
+    }
+
+    cartContainer.style.display = 'block';
+    emptyCart.style.display = 'none';
+    
+    cartContainer.innerHTML = cartItems.map(item => `
+        <div class="cart-item">
+            <div class="item-image">
+                <img src="${item.image}" alt="${item.name}">
+                ${item.originalPrice > item.price ? '<span class="sale-badge">SALE</span>' : ''}
+            </div>
+            
+            <div class="item-details">
+                <h3 class="item-name">${item.name}</h3>
+                <p class="item-info">Sold by: ${item.seller}</p>
+                <p class="item-info">Condition: ${item.condition}</p>
+                
+                <div class="price-section">
+                    <span class="current-price">₹${item.price.toFixed(2)}</span>
+                    ${item.originalPrice > item.price ? 
+                        `<span class="original-price">₹${item.originalPrice.toFixed(2)}</span>` : ''}
+                </div>
+                
+                <button class="remove-button" onclick="removeItem(${item.id})">
+                    <i data-lucide="trash-2"></i>
+                    Remove
+                </button>
+            </div>
+            
+            <div class="item-total">
+                <span class="current-price">₹${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+        </div>
+    `).join('');
+    
+    // Reinitialize icons for newly added elements
+    lucide.createIcons();
+    updateSummary();
+}
+
+// Remove item from cart
+function removeItem(id) {
+    cartItems = cartItems.filter(item => item.id !== id);
+    renderCart();
+}
+
+// Update order summary
+function updateSummary() {
+    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = subtotal + SHIPPING_COST;
+
+    document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+    document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+}
+
+// Initial render
+renderCart();

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidBazaar - Reviews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+        }
+        h2 {
+            color: #f1c40f;
+        }
+        .review-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 30px;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f1c40f;
+        }
+        .review-list {
+            margin-top: 20px;
+        }
+        .review {
+            background: #34495e;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        button {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #d4ac0d;
+        }
+    </style>
+</head>
+<body>
+    <h2>BidBazaar Reviews</h2>
+    <div class="review-form">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+        </div>
+        <textarea id="comment" placeholder="Your Review" required></textarea>
+        <button onclick="submitReview()">Submit Review</button>
+    </div>
+    <div class="review-list" id="reviews"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadReviews);
+
+        function submitReview() {
+            let name = document.getElementById("name").value;
+            let rating = document.querySelector("input[name='rating']:checked");
+            let comment = document.getElementById("comment").value;
+            
+            if (!name || !rating || !comment) {
+                alert("Please fill out all fields.");
+                return;
+            }
+            
+            let review = { name, rating: rating.value, comment };
+            let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+            reviews.push(review);
+            localStorage.setItem("reviews", JSON.stringify(reviews));
+            
+            loadReviews();
+        }
+
+        function loadReviews() {
+            let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+            let reviewsContainer = document.getElementById("reviews");
+            reviewsContainer.innerHTML = "";
+            
+            reviews.forEach(review => {
+                let div = document.createElement("div");
+                div.classList.add("review");
+                div.innerHTML = `<strong>${review.name}</strong> (${getStars(review.rating)})<br>${review.comment}`;
+                reviewsContainer.appendChild(div);
+            });
+        }
+
+        function getStars(rating) {
+            return "★".repeat(rating) + "☆".repeat(5 - rating);
+        }
+    </script>
+</body>
+</html>

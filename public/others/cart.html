@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidBazaar - Your Cart</title>
+    <link rel="stylesheet" href="cart.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body style="background-color: #76ABAE;">
+    <div class="container">
+        <div class="header">
+            <button class="back-button">
+                <i data-lucide="arrow-left"></i>
+                Continue Shopping
+            </button>
+            <h1 class="cart-title">
+                <i data-lucide="shopping-cart"></i>
+                Your Cart
+            </h1>
+        </div>
+
+        <div id="savings-alert" class="alert" style="display: none;">
+            <p>You're saving ₹<span id="savings-amount">0.00</span> on this order!</p>
+        </div>
+
+        <div class="cart-grid">
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be inserted here by JavaScript -->
+            </div>
+
+            <div class="order-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-content">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₹0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>₹29.99</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="total">₹0.00</span>
+                        </div>
+                        <p class="tax-note">Including all taxes</p>
+
+                        <div class="promo-section" id="promoSection">
+                            <div class="promo-input">
+                                <input type="text" id="promoCode" placeholder="Promo code">
+                                <button id="applyPromo">Apply</button>
+                            </div>
+                        </div>
+
+                        <button class="checkout-button">
+                            Proceed to Checkout
+                            <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="emptyCart" class="empty-cart" style="display: none;">
+            <i data-lucide="shopping-cart"></i>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items yet.</p>
+            <button class="continue-shopping">
+                <i data-lucide="arrow-left"></i>
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>
