@@ -11,7 +11,7 @@ const app = express();
 const port = 3006;
 
 // MongoDB connection string
-const uri = 'mongodb+srv://poojarysudhiksha80:@sudiksha.z7vrd.mongodb.net/bidbazaar?retryWrites=true&w=majority&appName=sudiksha';
+const uri = 'mongodb+srv://poojarysudhiksha80:su@sudiksha.z7vrd.mongodb.net/bidbazaar?retryWrites=true&w=majority&appName=sudiksha';
 let client;
 
 // Secret key for JWT
