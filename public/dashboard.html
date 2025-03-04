@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CustomCraft</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif;
+        }
+
+        body {
+            background: #e8f5e9; /* Soft green background */
+            color: #2e7d32; /* Dark green text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main {
+            width: 90%;
+            max-width: 500px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1b5e20;
+        }
+
+        .profile-circle {
+            width: 70px;
+            height: 70px;
+            background: #66bb6a;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+        }
+
+        .dashboard {
+            background: #f1f8e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .dashboard h2 {
+            font-size: 1.3em;
+            color: #1b5e20;
+            margin-bottom: 5px;
+        }
+
+        .logout-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .logout-btn:hover {
+            background: #1b5e20;
+        }
+
+        footer {
+            font-size: 0.9em;
+            color: #388e3c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            Welcome, <span id="userFullName"></span>!<br>
+            <small>Email: <span id="userEmail"></span></small>
+        </div>
+
+        <div class="profile-circle" id="userInitials"></div>
+
+        <div class="dashboard">
+            <h2>Your Orders</h2>
+            <p>Active Orders: <span id="activeOrders">0</span></p>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <footer>
+            &copy; 2025 BibBazaar. All Rights Reserved.
+        </footer>
+    </div>
+
+    <script>
+        async function fetchUserData() {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                window.location.href = "/login.html";
+                return;
+            }
+
+            try {
+                const response = await fetch("/dashboard", {
+                    method: "GET",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (!response.ok) {
+                    alert("Session expired. Please log in again.");
+                    window.location.href = "/login.html";
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (data.user) {
+                    document.getElementById("userFullName").textContent = data.user.name;
+                    document.getElementById("userEmail").textContent = data.user.email;
+
+                    const initials = data.user.name
+                        ?.split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .toUpperCase() || "U"; // Default "U" if name missing
+
+                    document.getElementById("userInitials").textContent = initials;
+                } else {
+                    alert("Session expired. Please log in again.");
+                    window.location.href = "/login.html";
+                }
+            } catch (error) {
+                console.error("❌ Error fetching user data:", error);
+                alert("An error occurred. Please try again later.");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("token");
+            window.location.href = "/login.html";
+        }
+
+        fetchUserData();
+    </script>
+</body>
+</html>
