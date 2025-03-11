@@ -10,9 +10,9 @@ const fs = require('fs');
 dotenv.config(); // Load environment variables
 
 const app = express();
-const port = 3006;
+const port = 3008;
 
-// MongoDB connection string (Hide in .env)
+// MongoDB connection string (Keep as is)
 const uri = "mongodb+srv://poojarysudhiksha80:su@sudiksha.z7vrd.mongodb.net/?retryWrites=true&w=majority&appName=sudiksha";
 if (!uri) {
     console.error("❌ MONGO_URI is missing in .env file!");
@@ -55,13 +55,17 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 });
 const upload = multer({ storage });
-app.use('/uploads', express.static('uploads')); // Serve uploaded images
+app.use('/uploads', express.static(uploadPath)); // Serve uploaded images
 
 // Route to add product for auction
 app.post('/addProduct', upload.fields([{ name: 'image' }, { name: 'authProof' }]), async (req, res) => {
     try {
         const { productName, description, auctionDuration } = req.body;
         
+        if (!req.files || !req.files['image'] || !req.files['authProof']) {
+            return res.status(400).json({ message: "❌ Image and Auth Proof are required!" });
+        }
+
         // Use relative paths for images
         const imagePath = `/uploads/${req.files['image'][0].filename}`;
         const authProofPath = `/uploads/${req.files['authProof'][0].filename}`;
@@ -92,7 +96,14 @@ app.get('/getProducts', async (req, res) => {
         const products = db.collection("products");
         const productList = await products.find({}).toArray();
 
-        res.json(productList);
+        // Convert relative paths to absolute URLs
+        const updatedProducts = productList.map(product => ({
+            ...product,
+            imagePath: `http://localhost:${port}${product.imagePath}`,
+            authProofPath: `http://localhost:${port}${product.authProofPath}`
+        }));
+
+        res.json(updatedProducts);
     } catch (error) {
         console.error("❌ Error fetching products:", error);
         res.status(500).json({ message: "❌ Failed to fetch products" });
