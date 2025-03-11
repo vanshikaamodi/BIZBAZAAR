@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auction Listings - BidBazaar</title>
+    <title>Product Details - BidBazaar</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -12,95 +12,117 @@
             padding: 20px;
             text-align: center;
         }
-        h2 {
-            color: #343a40;
-            margin-bottom: 20px;
-        }
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            justify-content: center;
+            max-width: 600px;
+            background: white;
             padding: 20px;
-            max-width: 1200px;
             margin: auto;
-        }
-        .card {
-            background: #fff;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-        }
-        .card img {
+        img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            height: auto;
             border-radius: 8px;
         }
-        .card h3 {
+        h2 {
             color: #007bff;
-            margin: 10px 0 5px;
-            font-size: 18px;
         }
-        .card p {
+        p {
             color: #555;
-            font-size: 14px;
-            margin: 5px 0;
         }
-        .bid-button {
-            display: inline-block;
-            background: #28a745;
-            color: white;
+        .bid-form {
+            margin-top: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 16px;
-            padding: 10px 15px;
+        }
+        button {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: 0.3s ease;
-            text-decoration: none;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background 0.3s ease;
         }
-        .bid-button:hover {
-            background: #218838;
+        button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    <h2>Available Auctions</h2>
-    <div class="container" id="productList"></div>
+    <div class="container">
+        <h2 id="productName">Loading...</h2>
+        <img id="productImage" src="" alt="Product Image">
+        <p id="productDescription"></p>
+        <p><strong>Auction Duration:</strong> <span id="auctionDuration"></span> hours</p>
+
+        <div class="bid-form">
+            <h3>Place a Bid</h3>
+            <input type="number" id="bidAmount" placeholder="Enter your bid amount" required>
+            <button onclick="placeBid()">Submit Bid</button>
+        </div>
+    </div>
 
     <script>
-        async function fetchProducts() {
-            const response = await fetch("/getProducts");
-            const products = await response.json();
-            
-            const productList = document.getElementById("productList");
-            productList.innerHTML = "";
-
-            products.forEach(product => {
-                const productDiv = document.createElement("div");
-                productDiv.classList.add("card");
-
-                // Ensure the correct image path
-                const imagePath = product.imagePath.startsWith("http") ? product.imagePath : `/uploads/${product.imagePath}`;
-
-                productDiv.innerHTML = `
-                    <img src="${imagePath}" alt="${product.productName}">
-                    <h3>${product.productName}</h3>
-                    <p>${product.description}</p>
-                    <p><strong>Duration:</strong> ${product.auctionDuration} hours</p>
-                    <a href="/bid?productId=${product._id}" class="bid-button">Bid Now</a>
-                `;
-                productList.appendChild(productDiv);
-            });
+        // Function to get productId from URL
+        function getProductIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("productId");
         }
 
-        fetchProducts();
+        // Fetch and display product details
+        async function fetchProductDetails() {
+            const productId = getProductIdFromURL();
+            if (!productId) {
+                alert("Product ID is missing!");
+                return;
+            }
+
+            const response = await fetch(`/getProductDetails?productId=${productId}`);
+            const product = await response.json();
+
+            if (!product) {
+                alert("Product not found!");
+                return;
+            }
+
+            document.getElementById("productName").innerText = product.productName;
+            document.getElementById("productImage").src = `/uploads/${product.imagePath}`;
+            document.getElementById("productDescription").innerText = product.description;
+            document.getElementById("auctionDuration").innerText = product.auctionDuration;
+        }
+
+        // Function to place a bid
+        async function placeBid() {
+            const productId = getProductIdFromURL();
+            const bidAmount = document.getElementById("bidAmount").value;
+
+            if (!bidAmount || bidAmount <= 0) {
+                alert("Please enter a valid bid amount!");
+                return;
+            }
+
+            const response = await fetch("/placeBid", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, bidAmount }),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        fetchProductDetails();
     </script>
 </body>
 </html>

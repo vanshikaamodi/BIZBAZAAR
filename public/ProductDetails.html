@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - BidBazaar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="productName"></h2>
+        <img id="productImage" src="" alt="Product Image">
+        <p id="productDescription"></p>
+        <p><strong>Duration:</strong> <span id="productDuration"></span> hours</p>
+
+        <label>Enter your bid:</label>
+        <input type="number" id="bidAmount" placeholder="Enter amount" required>
+        <button onclick="placeBid()">Place Bid</button>
+    </div>
+
+    <script>
+        async function loadProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("productId");
+            if (!productId) {
+                alert("Product not found!");
+                return;
+            }
+
+            const response = await fetch(`/getProduct/${productId}`);
+            const product = await response.json();
+
+            document.getElementById("productName").innerText = product.productName;
+            document.getElementById("productImage").src = product.imagePath;
+            document.getElementById("productDescription").innerText = product.description;
+            document.getElementById("productDuration").innerText = product.auctionDuration;
+        }
+
+        async function placeBid() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("productId");
+            const bidAmount = document.getElementById("bidAmount").value;
+
+            if (!bidAmount || bidAmount <= 0) {
+                alert("Please enter a valid bid amount!");
+                return;
+            }
+
+            const response = await fetch("/placeBid", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, userId: "demoUser", bidAmount }) // Replace demoUser with actual user ID
+            });
+
+            const result = await response.json();
+            alert(result.message);
+        }
+
+        loadProduct();
+    </script>
+
+</body>
+</html>

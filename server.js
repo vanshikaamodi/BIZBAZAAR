@@ -110,6 +110,60 @@ app.get('/getProducts', async (req, res) => {
     }
 });
 
+// Route to fetch a single product by ID
+app.get('/getProduct/:id', async (req, res) => {
+    try {
+        const db = client.db("bidbazaar");
+        const products = db.collection("products");
+        const product = await products.findOne({ _id: new MongoClient.ObjectId(req.params.id) });
+
+        if (!product) {
+            return res.status(404).json({ message: "❌ Product not found!" });
+        }
+
+        res.json(product);
+    } catch (error) {
+        console.error("❌ Error fetching product:", error);
+        res.status(500).json({ message: "❌ Failed to fetch product" });
+    }
+});
+
+// Route to place a bid
+app.post('/placeBid', async (req, res) => {
+    try {
+        const { productId, userId, bidAmount } = req.body;
+        const db = client.db("bidbazaar");
+        const products = db.collection("products");
+        const bids = db.collection("bids");
+
+        // Validate bid amount
+        const product = await products.findOne({ _id: new MongoClient.ObjectId(productId) });
+        if (!product) {
+            return res.status(404).json({ message: "❌ Product not found!" });
+        }
+
+        // Check if bid is higher than current highest bid
+        const highestBid = await bids.findOne({ productId }, { sort: { bidAmount: -1 } });
+        if (highestBid && bidAmount <= highestBid.bidAmount) {
+            return res.status(400).json({ message: "❌ Your bid must be higher than the current highest bid!" });
+        }
+
+        // Store bid
+        await bids.insertOne({
+            productId,
+            userId,
+            bidAmount,
+            bidTime: new Date(),
+        });
+
+        res.json({ message: "✅ Bid placed successfully!" });
+    } catch (error) {
+        console.error("❌ Error placing bid:", error);
+        res.status(500).json({ message: "❌ Failed to place bid" });
+    }
+});
+
+
 // Graceful shutdown
 process.on('SIGINT', async () => {
     console.log("\n🔴 Closing MongoDB connection...");
