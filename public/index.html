@@ -46,7 +46,13 @@
         <span class="cart-count">0</span>
       </a>
 
-      <a href="others/signup.html">Sign Up</a> 
+      <a href="dashboard.html" style="text-decoration: none;" class="user-profile">
+        <div id="profileSection">
+            <!-- Logo will be shown by default -->
+            <img src="img/user.png" class="user-logo" 
+            height="40px" width="40px" alt="CustomCraft Logo" />
+        </div>
+    </a>
     </div>
   </header>
   <div class="marquee">
@@ -140,6 +146,43 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script>
+
+    <script>
+      
+
+async function fetchUserData() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        // If no token, keep the logo
+        return;
+    }
+
+    const response = await fetch("/dashboard", {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    const data = await response.json();
+    if (data.user) {
+        // Extract initials from the user's name
+        const initials = data.user.name
+            .split(" ")
+            .map((word) => word[0])
+            .join("")
+            .toUpperCase();
+
+        // Replace the logo with the dynamic profile icon
+        const profileSection = document.getElementById("profileSection");
+        profileSection.innerHTML = `<div class="profile-icon">${initials}</div>`;
+    } else {
+        // If the token is invalid, redirect to login
+        alert("Session expired. Please log in again.");
+        window.location.href = "/login.html";
+    }
+}
+
+fetchUserData();
+    </script>
 </body>
 
 </html>

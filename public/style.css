@@ -320,3 +320,45 @@ header input[type="text"]:focus {
   border-color: #76ABAE;  /* Matches your theme color */
   box-shadow: 0 0 5px rgba(118, 171, 174, 0.3);  /* Subtle focus effect */
 }
+
+
+
+/* profilee */
+
+
+        
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #ff973c; /* Custom color */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  border: 3px solid black;
+}
+#profileSection{
+  padding-right: 10px;
+
+
+}
+
+/* .user-profile{
+  padding-right: 10px;
+} */
+
+.user-logo {
+  height: 40px;
+  width: 40px;
+ 
+  padding-right: 135px;
+
+}
+
+.profile-icon:hover {
+  background-color: #f68d45; /* Darker shade on hover */
+}
