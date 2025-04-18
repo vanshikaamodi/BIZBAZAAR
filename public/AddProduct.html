@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product for Auction</title>
+    <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #FF6F61, #3E8E41), 
+                url('https://www.toptal.com/designers/subtlepatterns/patterns/geometry.png');
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+
+
+
+
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #FFFFFF;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+h1 {
+    text-align: center;
+    color: #2D3A3C;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input, textarea, button, select {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #2C96BF;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(44, 150, 191, 0.3);
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #2C96BF;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #2190C5;
+}
+
+button:active {
+    background-color: #1D82A4;
+}
+
+.info {
+    font-size: 0.9em;
+    color: #888;
+    text-align: center;
+}
+
+.info strong {
+    color: #333;
+}
+
+input[type="file"] {
+    padding: 8px 0;
+}
+
+select {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+}
+
+select:focus {
+    border-color: #2C96BF;
+    box-shadow: 0 0 5px rgba(44, 150, 191, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    button {
+        font-size: 16px;
+        padding: 10px 18px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Product for Auction</h1>
+        <form id="auctionForm" enctype="multipart/form-data">
+            <!-- Product Name -->
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="productName" placeholder="Enter the product name" required>
+
+            <!-- Product Description -->
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" placeholder="Provide a detailed description" required></textarea>
+
+            <!-- Product Image -->
+            <label for="image">Upload Product Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <!-- Proof of Authenticity -->
+            <label for="authProof">Proof of Authenticity (PDF or Image):</label>
+            <input type="file" id="authProof" name="authProof" accept=".pdf, image/*" required>
+
+            <!-- Price -->
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" placeholder="Enter the price" required>
+
+            <!-- Auction Duration -->
+            <label for="auctionDuration">Auction Duration:</label>
+            <select id="auctionDuration" name="auctionDuration" required>
+                <option value="">Select duration</option>
+                <option value="1">1 Day</option>
+                <option value="7">1 Week</option>
+                <option value="30">1 Month</option>
+                <option value="90">3 Months (Max)</option>
+            </select>
+            <div class="info">* The maximum auction duration is 3 months.</div>
+
+            <!-- Other Details -->
+            <label for="otherDetails">Other Details:</label>
+            <textarea id="otherDetails" name="otherDetails" rows="4" placeholder="Provide any additional details" required></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Product</button>
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('auctionForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get the form data
+            const productName = document.getElementById('productName').value;
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+            const auctionDuration = document.getElementById('auctionDuration').value;
+            const otherDetails = document.getElementById('otherDetails').value;
+            
+            // Get file data
+            const imageFile = document.getElementById('image').files[0];
+            const authProofFile = document.getElementById('authProof').files[0];
+
+            // Create FormData object for sending the files and other form data
+            const formData = new FormData();
+            formData.append('productName', productName);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('auctionDuration', auctionDuration);
+            formData.append('otherDetails', otherDetails);
+            formData.append('image', imageFile);
+            formData.append('authProof', authProofFile);
+
+            // Send data to the server
+            fetch('/api/products', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use token for authentication
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Product submitted successfully');
+                    window.location.href = 'auctionListing.html'; // Redirect to auction listing page
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong!');
+            });
+        });
+    </script>
+</body>
+</html>
