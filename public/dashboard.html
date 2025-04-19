@@ -8,150 +8,149 @@
     <style>
         /* General Reset */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
 
-        body {
-            background: #f4f6f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+body {
+    background: #f9fafc;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
 
-        /* Main Content */
-        .main {
-            width: 90%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
+.main {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .header span {
-            font-size: 1.2em;
-            font-weight: 500;
-            color: #333;
-        }
+.header span {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #1c1c1c;
+}
 
-        .profile {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-        }
+.header p {
+    font-size: 0.95em;
+    color: #666;
+    margin-top: 5px;
+}
 
-        .profile-circle {
-            width: 80px;
-            height: 80px;
-            background: #f39c12;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            font-weight: bold;
-            color: #fff;
-        }
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+.profile-circle {
+    width: 70px;
+    height: 70px;
+    background: #4b7bec;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #fff;
+}
 
-        .card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
+.card {
+    background: #f7f9fb;
+    padding: 25px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
 
-        .card h2 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            color: #333;
-        }
+.card:hover {
+    background: #eaf1f8;
+    transform: translateY(-3px);
+}
 
-        .card p {
-            font-size: 1.1em;
-            color: #666;
-        }
+.card h2 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
 
-        .logout-btn {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            font-size: 1.1em;
-            margin-top: 20px;
-        }
+.card p {
+    font-size: 1em;
+    color: #555;
+}
 
-        .logout-btn:hover {
-            background: #cc0000;
-        }
+.active-orders-container {
+    padding: 0;
+}
 
-        .active-orders-container {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-height: 300px;
-            overflow-y: auto;
-        }
+.active-orders-container h2 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+}
 
-        #order-list li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            list-style: none;
-            color: #444;
-            font-size: 1em;
-        }
+#order-list {
+    list-style: none;
+}
 
-        #order-list li:last-child {
-            border-bottom: none;
-        }
+#order-list li {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95em;
+    color: #444;
+    line-height: 1.6;
+}
 
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 20px;
-        }
+#order-list li:last-child {
+    border-bottom: none;
+}
+
+.logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background 0.3s;
+    margin-top: 20px;
+}
+
+.logout-btn:hover {
+    background: #dc2626;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
+    padding-top: 10px;
+}
 
     </style>
 </head>
@@ -189,7 +188,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2025 CustomCraft. All Rights Reserved.</p>
+      
         </footer>
     </div>
 
