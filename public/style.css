@@ -64,8 +64,8 @@ header .logo a {
 }
 
 header input[type="text"] {
-  width: 250px;
-  height: 35px;
+  width: 500px;
+  height: 45px;
   padding: 0 16px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -76,7 +76,7 @@ header input[type="text"] {
 header .user-actions {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 40px;
 }
 
 header .user-actions a {
@@ -232,20 +232,27 @@ header .user-actions a:hover {
 
 /* Footer */
 footer {
-  background-color: #3f4142;
+  background-color: #2d7470;
   color: white;
-  padding: 20px;
+  padding: 40px 20px;
   text-align: center;
+  position: relative;
+}
+footer p{
+  margin: 10px 0;
+  font-size: 16px;
 }
 
 footer a {
   color: #76abae;
   margin: 0 8px;
   text-decoration: none;
+  transition: color 0.3s;
 }
 
 footer a:hover {
   text-decoration: underline;
+  color: f68d45;
 }
 
 /* Marquee */

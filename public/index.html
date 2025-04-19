@@ -78,33 +78,203 @@
     </div>
   </section>
 
-  <p align="center">At BidBazaar, we are passionate about connecting buyers and sellers in a dynamic and engaging auction platform. <br>
-    Our mission is to create a marketplace where unique treasures, antique collectibles, and rare
-    finds can be discovered,<br> bid upon, and cherished by enthusiasts from all walks of life</p>
+  <!-- <p align="center">At BidBazaar, we are passionate about connecting buyers and sellers in a dynamic and engaging auction platform. <br> -->
+    <!-- Our mission is to create a marketplace where unique treasures, antique collectibles, and rare -->
+    <!-- finds can be discovered,<br> bid upon, and cherished by enthusiasts from all walks of life</p> -->
+
+    <p align="center" style="font-size: 24px; line-height: 1.6; font-weight: 500;">
+      Welcome to <strong>BidBazaar</strong> — your ultimate destination for exciting, real-time auctions!<br>
+      We bring together buyers and sellers to explore a world of rare collectibles, unique antiques,<br>
+      and hidden treasures waiting to be discovered, bid on, and owned by passionate collectors like you.
+  </p>
 
   <!-- Customer Reviews Section -->
   <section class="reviews" id="reviews">
+    <style>
+      /* ⭐ Review Section Styling */
+      .reviews {
+        background-color: #fefefe;
+        padding: 50px 20px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+      }
+  
+      .reviews h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #222;
+      }
+  
+      .review-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 50px;
+      }
+  
+      .review {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        width: 280px;
+        text-align: left;
+      }
+  
+      .review p {
+        font-size: 1.05rem;
+        color: #444;
+        margin-bottom: 10px;
+      }
+  
+      .stars {
+        color: #f5b301;
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+  
+      .review span {
+        font-weight: bold;
+        color: #333;
+      }
+  
+      /* ⭐ Review Form Styling */
+      #reviewForm {
+        max-width: 500px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+  
+      #reviewForm textarea,
+      #reviewForm input,
+      #reviewForm select {
+        padding: 12px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-family: inherit;
+        resize: vertical;
+      }
+  
+      #reviewForm button {
+        background-color: #0077cc;
+        color: white;
+        padding: 12px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+  
+      #reviewForm button:hover {
+        background-color: #005fa3;
+      }
+    </style>
+  
     <h2>What Our Customers Are Saying</h2>
-    <div class="review-container">
+  
+    <div class="review-container" id="reviewContainer">
       <div class="review">
         <p>"BidBazaar is wonderful!!!"</p>
         <div class="stars">★★★</div>
-        <span>Aaron</span>
+        <span>- Aaron</span>
       </div>
-
+  
       <div class="review">
-        <p>"BidBazaar is amazing! I found a beautiful vintage necklace at a great price. Highly recommended!"</p>
+        <p>"I found a vintage necklace at a great price. Highly recommended!"</p>
         <div class="stars">★★★★★</div>
         <span>- Sarah</span>
       </div>
-
+  
       <div class="review">
-        <p>"Great platform for rare collectibles. The bidding process is smooth and fun!"</p>
+        <p>"Great platform for rare collectibles. Smooth bidding!"</p>
         <div class="stars">★★★★☆</div>
         <span>- Vanshu</span>
       </div>
     </div>
+  
+    <h2>Leave a Review</h2>
+    <form id="reviewForm">
+      <textarea id="reviewText" placeholder="Write your review..." required></textarea>
+      <select id="starRating" required>
+        <option value="">Select Rating</option>
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5">★★★★★</option>
+      </select>
+      <input type="text" id="userName" placeholder="Your Name" required />
+      <button type="submit">Submit Review</button>
+    </form>
+  
+    <script>
+      document.getElementById("reviewForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+  
+        const reviewText = document.getElementById("reviewText").value;
+        const starRating = document.getElementById("starRating").value;
+        const userName = document.getElementById("userName").value;
+  
+        const stars = "★★★★★☆☆☆☆☆".slice(5 - starRating, 10 - starRating);
+  
+        const newReview = document.createElement("div");
+        newReview.classList.add("review");
+        newReview.innerHTML = `
+          <p>"${reviewText}"</p>
+          <div class="stars">${stars}</div>
+          <span>- ${userName}</span>
+        `;
+  
+        document.getElementById("reviewContainer").prepend(newReview);
+        document.getElementById("reviewForm").reset();
+      });
+    </script>
   </section>
+
+  <!--Footer-->
+
+  <footer>
+    <div class="footer_main">
+        <div class="tag">
+            <h1>Contact</h1>
+            <a href="#"><i class="fa-solid fa-house"></i>400008/Mumbai/INDIA</a>
+            <a href="#"><i class="fa-solid fa-phone"></i>+91 1234567899</a>
+          
+        </div>
+
+        <div class="tag">
+            <h1>Get Help</h1>
+            <a href="faq.html" class="center">FAQ</a>
+            <a href="shipping.html" class="center">Shipping</a>
+            <a href="returns.html" class="center">Returns</a>
+            <a href="payment.html" class="center">Payment Options</a>
+        </div>
+
+        <div class="tag">
+            <h1>Follow Us</h1>  
+            <div class="social_link">
+                <a href="https://www.facebook.com/profile.php?id=61573189641095"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://x.com/G8256541Vrishab"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>                    
+            </div>
+        </div>
+
+        <div class="tag">
+            <form action="/subscribe"  method="POST">
+            <div class="search_bar">
+                <input type="email" name="email" placeholder="Your email id here" required>
+                <button type="submit">Subscribe</button>
+            </div>
+        </div>
+
+    </div>
+</footer>
 
   <!-- Footer -->
   <footer>

@@ -1,0 +1,71 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>Contact Us</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> </head> <body> <section class="contact py-5 my-5" id="contact"> <div class="container"> <div class="section_title text-center mb-5"> <h1 class="text-capitalize">Contact Us</h1> </div>
+    php-template
+    Copy
+    Edit
+    <div class="row mb-5">
+      <div class="col-md-4 col-12">
+        <div class="border border-success rounded shadow text-center p-3">
+          <div class="mb-4">
+            <i class="fas fa-phone-alt fa-3x"></i>
+          </div>
+          <div>
+            <h3>Whatsapp</h3>
+            <p><b>Phone:</b> +91-9168786655</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="border border-success rounded shadow text-center p-3">
+          <div class="mb-4">
+            <i class="fas fa-envelope-open fa-3x"></i>
+          </div>
+          <div>
+            <h3>Email Us</h3>
+            <p><b>Email:</b> gamefinityhelp@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="border border-success rounded shadow text-center p-3">
+          <div class="mb-4">
+            <i class="far fa-life-ring fa-3x"></i>
+          </div>
+          <div>
+            <h3>24x7 Support</h3>
+            <p><b>Customer:</b> 1800 101 303</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-8 col-10 mx-auto mb-3 my-5 py-5 border shadow">
+        <h3 class="text-center mb-4">Get in Touch</h3>
+        <form action="https://formsubmit.co/poojarysudhiksha80@gmail.com" method="POST">
+          <!-- Hidden inputs -->
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="thanks.html">
+    
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input name="name" id="name" type="text" class="form-control" placeholder="Your Name" required>
+          </div>
+    
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input name="email" id="email" type="email" class="form-control" placeholder="you@example.com" required>
+          </div>
+    
+          <!-- Message -->
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" class="form-control" placeholder="Type your message..." rows="4" required></textarea>
+          </div>
+    
+          <!-- Submit -->
+          <button type="submit" class="btn btn-success btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
