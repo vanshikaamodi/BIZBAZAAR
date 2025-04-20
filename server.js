@@ -10,7 +10,7 @@ const fs = require('fs');
 dotenv.config();
 
 const app = express();
-const port = 3006;
+const port = 3007;
 
 // MongoDB connection string
 const uri = 'mongodb+srv://poojarysudhiksha80:su@sudiksha.z7vrd.mongodb.net/bidbazaar?retryWrites=true&w=majority&appName=sudiksha';

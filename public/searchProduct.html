@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        /* Search bar styles */
+        .search-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        /* Category chips */
+        .category-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .category-chip {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .category-chip:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Results section */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .category-section {
+            border: 1px solid #eee;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background-color: #f9f9f9;
+            padding: 12px 16px;
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+            text-transform: capitalize;
+        }
+
+        .product-list {
+            list-style: none;
+        }
+
+        .product-item {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 16px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .product-price {
+            color: #4a90e2;
+            font-weight: 500;
+        }
+
+        /* Empty states */
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .empty-state-message {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-suggestion {
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Search</h1>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Search for jewelry, electronics, paintings, coins, etc."
+            >
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+        
+        <!-- Category chips -->
+        <div class="category-chips" id="categoryChips"></div>
+        
+        <!-- Results Section -->
+        <div class="results-container" id="resultsContainer"></div>
+        
+        <!-- Empty state - initial -->
+        <div class="empty-state" id="initialState">
+            <p class="empty-state-message">Try searching for a category or product name</p>
+            <p class="empty-state-suggestion">Example categories: jewelry, electronics, paintings, coins, home decor, books</p>
+        </div>
+        
+        <!-- Empty state - no results -->
+        <div class="empty-state" id="noResultsState" style="display: none;">
+            <p class="empty-state-message">No products found matching "<span id="searchQueryText"></span>"</p>
+            <p class="empty-state-suggestion">Try searching for "jewelry", "electronics", "paintings", "coins", "home decor", or "books"</p>
+        </div>
+    </div>
+
+    <script>
+        // Product database
+        const products = [
+            // Jewelry products
+            { id: 1, name: 'Gold Necklace', category: 'jewelry', price: '$299', image: 'https://via.placeholder.com/80' },
+            { id: 2, name: 'Silver Earrings', category: 'jewelry', price: '$89', image: 'https://via.placeholder.com/80' },
+            { id: 3, name: 'Diamond Ring', category: 'jewelry', price: '$999', image: 'https://via.placeholder.com/80' },
+            { id: 4, name: 'Beaded Bracelet', category: 'jewelry', price: '$49', image: 'https://via.placeholder.com/80' },
+            
+            // Home decor products
+            { id: 5, name: 'Table Lamp', category: 'home decor', price: '$75', image: 'https://via.placeholder.com/80' },
+            { id: 6, name: 'Wall Art', category: 'home decor', price: '$120', image: 'https://via.placeholder.com/80' },
+            { id: 7, name: 'Throw Pillows', category: 'home decor', price: '$35', image: 'https://via.placeholder.com/80' },
+            { id: 8, name: 'Ceramic Vase', category: 'home decor', price: '$45', image: 'https://via.placeholder.com/80' },
+            { id: 9, name: 'Scented Candle', category: 'home decor', price: '$28', image: 'https://via.placeholder.com/80' },
+            
+            // Electronics products
+            { id: 10, name: 'Wireless Earbuds', category: 'electronics', price: '$129', image: 'https://via.placeholder.com/80' },
+            { id: 11, name: 'Smart Watch', category: 'electronics', price: '$249', image: 'https://via.placeholder.com/80' },
+            { id: 12, name: 'Bluetooth Speaker', category: 'electronics', price: '$79', image: 'https://via.placeholder.com/80' },
+            { id: 13, name: 'Tablet', category: 'electronics', price: '$399', image: 'https://via.placeholder.com/80' },
+            { id: 14, name: 'HD Monitor', category: 'electronics', price: '$189', image: 'https://via.placeholder.com/80' },
+            
+            // Paintings
+            { id: 15, name: 'Abstract Canvas', category: 'paintings', price: '$350', image: 'https://via.placeholder.com/80' },
+            { id: 16, name: 'Landscape Painting', category: 'paintings', price: '$275', image: 'https://via.placeholder.com/80' },
+            { id: 17, name: 'Watercolor Art', category: 'paintings', price: '$180', image: 'https://via.placeholder.com/80' },
+            { id: 18, name: 'Modern Portrait', category: 'paintings', price: '$420', image: 'https://via.placeholder.com/80' },
+            
+            // Coins
+            { id: 19, name: 'Ancient Roman Coin', category: 'coins', price: '$150', image: 'https://via.placeholder.com/80' },
+            { id: 20, name: 'Silver Dollar (1921)', category: 'coins', price: '$95', image: 'https://via.placeholder.com/80' },
+            { id: 21, name: 'Gold Sovereign', category: 'coins', price: '$450', image: 'https://via.placeholder.com/80' },
+            { id: 22, name: 'Commemorative Set', category: 'coins', price: '$85', image: 'https://via.placeholder.com/80' },
+            
+            // Books
+            { id: 23, name: 'Classic Literature', category: 'books', price: '$18', image: 'https://via.placeholder.com/80' },
+            { id: 24, name: 'Cookbook Collection', category: 'books', price: '$32', image: 'https://via.placeholder.com/80' },
+            { id: 25, name: 'Science Fiction Novel', category: 'books', price: '$15', image: 'https://via.placeholder.com/80' },
+        ];
+        
+        // Get unique categories
+        const categories = [...new Set(products.map(product => product.category))];
+        
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const categoryChips = document.getElementById('categoryChips');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const initialState = document.getElementById('initialState');
+        const noResultsState = document.getElementById('noResultsState');
+        const searchQueryText = document.getElementById('searchQueryText');
+        
+        // Create category chips
+        categories.forEach(category => {
+            const chip = document.createElement('button');
+            chip.className = 'category-chip';
+            chip.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            chip.addEventListener('click', () => {
+                searchInput.value = category;
+                handleSearch(category);
+            });
+            categoryChips.appendChild(chip);
+        });
+        
+        // Handle search
+        function handleSearch(query) {
+            // If query is an event, extract value
+            if (query && query.target) {
+                query = query.target.value.toLowerCase();
+            } else {
+                query = query.toLowerCase();
+            }
+            
+            // Update search field if called from chip
+            if (searchInput.value.toLowerCase() !== query) {
+                searchInput.value = query;
+            }
+            
+            if (query.trim() === '') {
+                // Show initial state
+                resultsContainer.innerHTML = '';
+                initialState.style.display = 'block';
+                noResultsState.style.display = 'none';
+                return;
+            }
+            
+            // Filter products
+            const filteredProducts = products.filter(
+                product => 
+                    product.category.toLowerCase().includes(query) || 
+                    product.name.toLowerCase().includes(query)
+            );
+            
+            // Show results or no results state
+            if (filteredProducts.length > 0) {
+                displayResults(filteredProducts);
+                initialState.style.display = 'none';
+                noResultsState.style.display = 'none';
+            } else {
+                resultsContainer.innerHTML = '';
+                initialState.style.display = 'none';
+                noResultsState.style.display = 'block';
+                searchQueryText.textContent = query;
+            }
+        }
+        
+        // Display results grouped by category
+        function displayResults(filteredProducts) {
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+            
+            // Group products by category
+            const groupedProducts = {};
+            filteredProducts.forEach(product => {
+                if (!groupedProducts[product.category]) {
+                    groupedProducts[product.category] = [];
+                }
+                groupedProducts[product.category].push(product);
+            });
+            
+            // Create HTML for each category
+            Object.entries(groupedProducts).forEach(([category, products]) => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+                
+                // Category header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'category-header';
+                categoryHeader.textContent = `${category} (${products.length} items)`;
+                categorySection.appendChild(categoryHeader);
+                
+                // Product list
+                const productList = document.createElement('ul');
+                productList.className = 'product-list';
+                
+                products.forEach(product => {
+                    const productItem = document.createElement('li');
+                    productItem.className = 'product-item';
+                    
+                    productItem.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                        </div>
+                        <span class="product-price">${product.price}</span>
+                    `;
+                    
+                    productList.appendChild(productItem);
+                });
+                
+                categorySection.appendChild(productList);
+                resultsContainer.appendChild(categorySection);
+            });
+        }
+        
+        // Set up event listeners
+        searchInput.addEventListener('input', handleSearch);
+    </script>
+</body>
+</html>
