@@ -240,47 +240,59 @@
 
   <!--Footer-->
 
-  <footer>
-    <div class="footer_main">
-        <div class="tag">
-            <h1>Contact</h1>
-            <a href="#"><i class="fa-solid fa-house"></i>400008/Mumbai/INDIA</a>
-            <a href="#"><i class="fa-solid fa-phone"></i>+91 1234567899</a>
-          
+  <footer style="background: #363535; color: white; padding: 50px 0; font-family: 'Segoe UI', sans-serif;">
+    <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+
+        <!-- Contact Info -->
+        <div style="flex: 1 1 220px;">
+            <h2 style="color: #fcfcfb; margin-bottom: 20px;">Contact</h2>
+            <p><i class="fa-solid fa-house" style="margin-right: 10px; color: #fffefa;"></i>400008, Mumbai, INDIA</p>
+            <p><i class="fa-solid fa-phone" style="margin-right: 10px; color: #f6f5f2;"></i>+91 1234567899</p>
         </div>
 
-        <div class="tag">
-            <h1>Get Help</h1>
-            <a href="FAQ.html" class="center">FAQ</a>
-            <a href="payment.html" class="center">Payment Options</a> <br>
+        <!-- Help -->
+        <div style="flex: 1 1 220px;">
+            <h2 style="color: #ffffff; margin-bottom: 20px;">Get Help</h2>
+            <a href="FAQ.html" style="display: block; margin-bottom: 10px; color: #bbb; text-decoration: none;">FAQ</a>
+            <a href="payment.html" style="display: block; margin-bottom: 10px; color: #bbb; text-decoration: none;">Payment Options</a>
         </div>
 
-        <div class="tag">
-            <h1>Follow Us</h1>  
-            <div class="social_link">
-                <a href="https://www.facebook.com/profile.php?id=61573189641095"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://x.com/G8256541Vrishab"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>                    
+        <!-- Follow Us -->
+        <div style="flex: 1 1 220px;">
+            <h2 style="color: #fffef9; margin-bottom: 20px;">Follow Us</h2>
+            <div style="display: flex; gap: 15px;">
+                <a href="https://www.facebook.com/profile.php?id=61573189641095" style="color: #bbb;"><i class="fa-brands fa-facebook-f fa-lg"></i></a>
+                <a href="https://x.com/G8256541Vrishab" style="color: #bbb;"><i class="fa-brands fa-twitter fa-lg"></i></a>
+                <a href="#" style="color: #bbb;"><i class="fa-brands fa-instagram fa-lg"></i></a>
+                <a href="#" style="color: #bbb;"><i class="fa-brands fa-linkedin-in fa-lg"></i></a>
             </div>
         </div>
 
-        <div class="tag">
-            <form action="/subscribe"  method="POST">
-            <div class="search_bar">
-                <input type="email" name="email" placeholder="Your email id here" required>
-                <button type="submit">Subscribe</button>
-            </div>
+        <!-- Newsletter -->
+        <div style="flex: 1 1 300px;">
+            <h2 style="color: #f8f7f4; margin-bottom: 20px;">Subscribe</h2>
+            <form action="/subscribe" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="email" name="email" placeholder="Your email id here" required style="padding: 10px; flex: 1; border: none; border-radius: 4px;">
+                <button type="submit" style="padding: 10px 20px; background-color: #44b3b1; color: #111; border: none; border-radius: 4px; cursor: pointer;">Subscribe</button>
+            </form>
         </div>
 
     </div>
+
+    <div style="text-align: center; color: #666; font-size: 14px; margin-top: 40px;">
+        <!-- <p>&copy; 2025 BidBazaar. All rights reserved.</p> -->
+    </div>
 </footer>
+
+<!-- Font Awesome CDN (Add this in <head> if not already included) -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 
   <!-- Footer -->
   <footer>
     <p>
       &copy; 2025 BidBazaar. All Rights Reserved. |
-      <a href="termscondition.html" aria-label="Terms and Conditions">Terms & Conditions</a>
+      <a href="public/others/termscondition.html" aria-label="Terms and Conditions">Terms & Conditions</a>
     </p>
   </footer>
 
