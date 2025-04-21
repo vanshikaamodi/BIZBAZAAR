@@ -1,0 +1,496 @@
+<!-- bidpage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Your Bid</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e0f7fa;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      gap: 30px;
+    }
+
+    .product-image {
+      flex: 0 0 300px;
+    }
+
+    .product-image img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-info h2 {
+      font-size: 1.8em;
+      color: #34495e;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .product-info p {
+      margin: 10px 0;
+      font-size: 1.1em;
+      color: #7f8c8d;
+    }
+
+    .price {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #e74c3c;
+      margin: 15px 0;
+    }
+
+    .price::before {
+      content: '₹';
+    }
+
+    .bid-section {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .bid-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .bid-form label {
+      font-weight: 600;
+      color: #34495e;
+      font-size: 1.1em;
+    }
+
+    .bid-form input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1.1em;
+    }
+
+    .bid-btn {
+      background-color: #27ae60;
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .bid-btn:hover {
+      background-color: #2ecc71;
+    }
+
+    .bid-btn:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 0.9em;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .bids-history {
+      margin-top: 40px;
+    }
+
+    .bids-history h3 {
+      color: #34495e;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .bid-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .bid-item:last-child {
+      border-bottom: none;
+    }
+
+    .bidder-name {
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .bid-amount {
+      font-weight: 600;
+      color: #e74c3c;
+    }
+
+    .bid-amount::before {
+      content: '₹';
+    }
+
+    .bid-time {
+      color: #95a5a6;
+      font-size: 0.9em;
+    }
+
+    .timer-section {
+      padding: 15px;
+      background-color: #f1f8e9;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .timer {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #689f38;
+    }
+
+    .auction-closed {
+      padding: 20px;
+      background-color: #ffebee;
+      color: #c62828;
+      text-align: center;
+      font-size: 1.4em;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .back-btn {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 30px;
+      transition: background-color 0.3s ease;
+      display: block;
+      width: fit-content;
+    }
+
+    .back-btn:hover {
+      background-color: #2980b9;
+    }
+
+    @media (max-width: 768px) {
+      .product-details {
+        flex-direction: column;
+      }
+      
+      .product-image {
+        flex: 0 0 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Place Your Bid</h1>
+    
+    <div id="auctionClosed" class="auction-closed">
+      This auction has ended
+    </div>
+    
+    <div id="timerSection" class="timer-section">
+      <p>Time Remaining:</p>
+      <div id="timer" class="timer">Loading...</div>
+    </div>
+    
+    <div class="product-details">
+      <div class="product-image">
+        <img id="productImage" src="" alt="Product Image">
+      </div>
+      <div class="product-info">
+        <h2 id="productName"></h2>
+        <p id="productDescription"></p>
+        <p>Seller: <span id="sellerName"></span></p>
+        <p>Starting Price: <span id="startingPrice" class="price"></span></p>
+        <p>Current Highest Bid: <span id="currentHighestBid" class="price"></span></p>
+        <p>Number of Bids: <span id="bidCount"></span></p>
+      </div>
+    </div>
+    
+    <div class="bid-section">
+      <form id="bidForm" class="bid-form">
+        <label for="bidAmount">Your Bid Amount (₹):</label>
+        <input type="number" id="bidAmount" name="bidAmount" required>
+        <div id="bidError" class="error-message">Your bid must be higher than the current highest bid</div>
+        <button id="bidButton" type="submit" class="bid-btn">Place Bid</button>
+      </form>
+    </div>
+    
+    <div class="bids-history">
+      <h3>Bid History</h3>
+      <div id="bidsList">
+        <!-- Bid history will be loaded here -->
+      </div>
+    </div>
+    
+    <button onclick="goBack()" class="back-btn">Back to Auction Listings</button>
+  </div>
+
+  <script>
+    let productId = null;
+    let currentProduct = null;
+    let bidInterval = null;
+    let endTime = null;
+    
+    // Get product ID from URL
+    function getProductIdFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('productId');
+    }
+    
+    // Load product details
+    function loadProductDetails() {
+      productId = getProductIdFromUrl();
+      
+      if (!productId) {
+        alert('Product ID not found');
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      fetch(`/api/products/${productId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          currentProduct = data.product;
+          displayProductDetails(currentProduct);
+          loadBidHistory();
+          startTimer(currentProduct.endTime);
+        } else {
+          alert('Error loading product: ' + data.message);
+          window.location.href = 'index.html';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong!');
+      });
+    }
+    
+    // Display product details
+    function displayProductDetails(product) {
+      document.getElementById('productName').textContent = product.productName;
+      document.getElementById('productDescription').textContent = product.description;
+      document.getElementById('sellerName').textContent = product.sellerName;
+      document.getElementById('startingPrice').textContent = product.price;
+      document.getElementById('currentHighestBid').textContent = product.currentBid || product.price;
+      document.getElementById('bidCount').textContent = product.bidCount || 0;
+      document.getElementById('productImage').src = product.imageURL;
+    }
+    
+    // Load bid history
+    function loadBidHistory() {
+      fetch(`/api/bids/${productId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          displayBidHistory(data.bids);
+        } else {
+          console.error('Error loading bid history:', data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+    
+    // Display bid history
+    function displayBidHistory(bids) {
+      const bidsList = document.getElementById('bidsList');
+      bidsList.innerHTML = '';
+      
+      if (bids.length === 0) {
+        bidsList.innerHTML = '<p>No bids yet. Be the first to place a bid!</p>';
+        return;
+      }
+      
+      bids.forEach(bid => {
+        const bidItem = document.createElement('div');
+        bidItem.classList.add('bid-item');
+        
+        const bidderInfo = document.createElement('div');
+        bidderInfo.innerHTML = `
+          <span class="bidder-name">${bid.bidderName}</span>
+          <div class="bid-time">${formatDate(new Date(bid.bidTime))}</div>
+        `;
+        
+        const bidAmount = document.createElement('div');
+        bidAmount.classList.add('bid-amount');
+        bidAmount.textContent = bid.bidAmount;
+        
+        bidItem.appendChild(bidderInfo);
+        bidItem.appendChild(bidAmount);
+        bidsList.appendChild(bidItem);
+      });
+    }
+    
+    // Format date
+    function formatDate(date) {
+      return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    // Start timer countdown
+    function startTimer(endTimeStr) {
+      endTime = new Date(endTimeStr);
+      
+      // Check if the auction has already ended
+      if (endTime <= new Date()) {
+        document.getElementById('timerSection').style.display = 'none';
+        document.getElementById('auctionClosed').style.display = 'block';
+        document.getElementById('bidButton').disabled = true;
+        return;
+      }
+      
+      // Update the timer every second
+      bidInterval = setInterval(updateTimer, 1000);
+      updateTimer(); // Call once immediately
+    }
+    
+    // Update timer display
+    function updateTimer() {
+      const now = new Date();
+      const distance = endTime - now;
+      
+      if (distance <= 0) {
+        clearInterval(bidInterval);
+        document.getElementById('timerSection').style.display = 'none';
+        document.getElementById('auctionClosed').style.display = 'block';
+        document.getElementById('bidButton').disabled = true;
+        document.getElementById('timer').textContent = 'Auction Ended';
+        return;
+      }
+      
+      // Calculate days, hours, minutes, seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      document.getElementById('timer').textContent = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    
+    // Submit bid
+    document.getElementById('bidForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const bidAmount = parseFloat(document.getElementById('bidAmount').value);
+      const currentBid = parseFloat(document.getElementById('currentHighestBid').textContent);
+      
+      // Validate bid amount
+      if (bidAmount <= currentBid) {
+        document.getElementById('bidError').style.display = 'block';
+        return;
+      } else {
+        document.getElementById('bidError').style.display = 'none';
+      }
+      
+      // Send bid to server
+      fetch(`/api/bids/${productId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ bidAmount })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert('Bid placed successfully!');
+          document.getElementById('bidAmount').value = '';
+          
+          // Update current bid and bid count
+          document.getElementById('currentHighestBid').textContent = bidAmount;
+          document.getElementById('bidCount').textContent = 
+            parseInt(document.getElementById('bidCount').textContent) + 1;
+          
+          // Refresh bid history
+          loadBidHistory();
+        } else {
+          alert('Error placing bid: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong!');
+      });
+    });
+    
+    // Go back to listing
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+    
+    // Initialize page
+    window.onload = loadProductDetails;
+  </script>
+</body>
+</html>

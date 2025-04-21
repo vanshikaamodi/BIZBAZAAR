@@ -98,7 +98,11 @@
         <form id="signupForm">
             <input type="text" id="name" placeholder="Full Name" required aria-label="Full Name">
             <input type="email" id="email" placeholder="Email" required aria-label="Email Address">
-            <input type="password" id="password" placeholder="Password" required aria-label="Password">
+            <div style="position: relative;">
+                <input type="password" id="password" placeholder="Password" required aria-label="Password">
+                <span id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">👁️</span>
+            </div>
+            
             <button type="submit">Sign Up</button>
         </form>
         <p>Already have an account? <a href="login.html">Login here</a></p>
@@ -106,26 +110,89 @@
     </div>
 
     <script>
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+        const signupMessage = document.getElementById("signupMessage");
+    
+        // Toggle password visibility
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+        });
+    
+        // Live Name Validation
+        nameInput.addEventListener("input", () => {
+            if (/\d/.test(nameInput.value)) {
+                signupMessage.innerText = "Name should not contain numbers.";
+                signupMessage.style.color = "red";
+            } else {
+                signupMessage.innerText = "";
+            }
+        });
+    
+        // Live Email Validation
+        emailInput.addEventListener("input", () => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                signupMessage.innerText = "Enter a valid email address.";
+                signupMessage.style.color = "red";
+            } else {
+                signupMessage.innerText = "";
+            }
+        });
+    
+        // Live Password Validation
+        passwordInput.addEventListener("input", () => {
+            if (passwordInput.value.length < 6) {
+                signupMessage.innerText = "Password must be at least 6 characters.";
+                signupMessage.style.color = "red";
+            } else {
+                signupMessage.innerText = "";
+            }
+        });
+    
+        // Submit form
         document.getElementById("signupForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
+    
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+    
+            if (/\d/.test(name)) {
+                signupMessage.innerText = "Name should not contain numbers.";
+                return;
+            }
+    
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                signupMessage.innerText = "Enter a valid email address.";
+                return;
+            }
+    
+            if (password.length < 6) {
+                signupMessage.innerText = "Password must be at least 6 characters.";
+                return;
+            }
+    
             const response = await fetch("/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, password })
             });
-
+    
             const data = await response.json();
-            document.getElementById("signupMessage").innerText = data.message;
-
+            signupMessage.innerText = data.message;
+            signupMessage.style.color = response.ok ? "green" : "red";
+    
             if (response.ok) {
                 setTimeout(() => window.location.href = "login.html", 2000);
             }
         });
     </script>
+    
 </body>
 </html>

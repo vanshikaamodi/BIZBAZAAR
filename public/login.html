@@ -18,7 +18,9 @@
         .container {
             background: white;
             padding: 30px ;
-            padding-right: 60px;
+            padding-right: 30px;
+     
+
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -32,15 +34,18 @@
         }
 
         input {
+            box-sizing: border-box; /* 👈 This line fixes sizing issues */
             display: block;
             width: 100%;
             margin: 10px 0;
             padding: 12px;
+            padding-right: 40px; /* Add this here once for both inputs */
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 16px;
             transition: border-color 0.3s;
         }
+        
 
         input:focus {
             border-color: #ff973c; /* Highlight border on focus */
@@ -88,7 +93,13 @@
         <h2>Login</h2>
         <form id="loginForm">
             <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
+            <div style="position: relative;">
+                <input type="password" id="password" placeholder="Password" required>
+                <span id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">👁️</span>
+            </div>
+            
+
+            
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
@@ -96,25 +107,35 @@
     </div>
 
     <script>
-               document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+    
+        togglePassword.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+        });
+    
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-
+    
             const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-
+            const password = passwordInput.value;
+    
             const response = await fetch("/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
             });
-
+    
             const data = await response.json();
             document.getElementById("loginMessage").innerText = data.message;
-
+    
             if (response.ok) {
                 localStorage.setItem("token", data.token); // Store JWT Token
                 setTimeout(() => window.location.href = "index.html", 2000);
             }
-        });</script>
-</body>
+        });
+    </script>
+    </body>
 </html>

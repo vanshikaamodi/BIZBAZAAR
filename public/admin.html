@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+
+        header h1 {
+            color: #007BFF;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sneaker-image {
+            width: 50px;
+            height: auto;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="#add-sneaker">Add Sneaker</a></li>
+                    <li><a href="#manage-sneakers">Manage Sneakers</a></li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="add-sneaker">
+            <h2>Add New Sneaker</h2>
+            <form id="sneaker-form">
+                <label for="name">Sneaker Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" required>
+
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" required>
+
+                <label for="image">Image URL:</label>
+                <input type="url" id="image" name="image" required>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <button type="submit">Add Sneaker</button>
+            </form>
+        </section>
+
+        <section id="manage-sneakers">
+            <h2>Manage Sneakers</h2>
+            <table id="sneaker-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sneaker items will be populated here -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        // Function to handle form submission
+        document.getElementById('sneaker-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const brand = document.getElementById('brand').value;
+            const category = document.getElementById('category').value;
+            const price = document.getElementById('price').value;
+            const image = document.getElementById('image').value;
+            const description = document.getElementById('description').value;
+
+            // Create a new row for the sneaker table
+            const tableBody = document.getElementById('sneaker-table').querySelector('tbody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${brand}</td>
+                <td>${category}</td>
+                <td>$${price}</td>
+                <td>${description}</td>
+                <td><img src="${image}" alt="${name}" class="sneaker-image"></td>
+                <td>
+                    <button onclick="deleteSneaker(this)">Delete</button>
+                </td>
+            `;
+
+            // Append the new row to the table
+            tableBody.appendChild(newRow);
+
+            // Clear the form fields
+            document.getElementById('sneaker-form').reset();
+        });
+
+        // Function to delete a sneaker row
+        function deleteSneaker(button) {
+            if (confirm("Are you sure you want to delete this sneaker?")) {
+                const row = button.parentElement.parentElement; // Get the row of the button
+                row.parentElement.removeChild(row); // Remove the row from the table
+            }
+        }
+    </script>
+</body>
+</html>
