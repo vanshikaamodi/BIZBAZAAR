@@ -24,7 +24,7 @@
     <div class="user-actions">
       <span><a href="others/help.html" aria-label="Help and Contact">Help & Contact</a></span>
       <span><a href="chatbot.html" aria-label="Help and Contact">Chatbot</a></span>
-      <a href="cart.html" class="cart-icon" aria-label="Cart">
+      <a href="others/cart.html" class="cart-icon" aria-label="Cart">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"></circle>
@@ -74,10 +74,12 @@
         <p>Electronics</p>
       </div>
       <div>
+        <a href="CHomedecor.html">
         <div class="circle">
           <img src="img/CISOO Vintage Oval Picture Frame 5x7 Antique Photo Frame Table Top Display and Wall Hanging Home Decor (Bronze Gold).jpg"
             alt="Home Decor" />
         </div>
+        </a>
         <p>Home Decor</p>
       </div>
     </div>
@@ -243,44 +245,75 @@
 
   <!--Footer-->
 
-  <footer style="background: #363535; color: white; padding: 50px 0; font-family: 'Segoe UI', sans-serif;">
-    <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+ <!-- Font Awesome CDN (Put this in <head> if not already included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        <!-- Contact Info -->
-        <div style="flex: 1 1 220px;">
-            <h2 style="color: #fcfcfb; margin-bottom: 20px;">Contact</h2>
-            <p><i class="fa-solid fa-house" style="margin-right: 10px; color: #fffefa;"></i>400008, Mumbai, INDIA</p>
-            <p><i class="fa-solid fa-phone" style="margin-right: 10px; color: #f6f5f2;"></i>+91 1234567899</p>
-        </div>
+<!-- Fancy Footer -->
+<footer style="background: linear-gradient(135deg, #2d2d2d, #1a1a1a); color: white; padding: 60px 0; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; padding: 0 20px;">
 
-        <!-- Help -->
-        <div style="flex: 1 1 220px;">
-            <h2 style="color: #ffffff; margin-bottom: 20px;">Get Help</h2>
-            <a href="FAQ.html" style="display: block; margin-bottom: 10px; color: #bbb; text-decoration: none;">FAQ</a>
-            <a href="payment.html" style="display: block; margin-bottom: 10px; color: #bbb; text-decoration: none;">Payment Options</a>
-        </div>
-
-        <!-- Follow Us -->
-        <div style="flex: 1 1 220px;">
-            <h2 style="color: #fffef9; margin-bottom: 20px;">Follow Us</h2>
-            <div style="display: flex; gap: 15px;">
-                <a href="https://www.facebook.com/profile.php?id=61573189641095" style="color: #bbb;"><i class="fa-brands fa-facebook-f fa-lg"></i></a>
-                <a href="https://x.com/G8256541Vrishab" style="color: #bbb;"><i class="fa-brands fa-twitter fa-lg"></i></a>
-                <a href="#" style="color: #bbb;"><i class="fa-brands fa-instagram fa-lg"></i></a>
-                <a href="#" style="color: #bbb;"><i class="fa-brands fa-linkedin-in fa-lg"></i></a>
-            </div>
-        </div>
-
-        <!-- Newsletter -->
-        <div style="flex: 1 1 300px;">
-            <h2 style="color: #f8f7f4; margin-bottom: 20px;">Subscribe</h2>
-            <form action="/subscribe" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="email" name="email" placeholder="Your email id here" required style="padding: 10px; flex: 1; border: none; border-radius: 4px;">
-                <button type="submit" style="padding: 10px 20px; background-color: #44b3b1; color: #111; border: none; border-radius: 4px; cursor: pointer;">Subscribe</button>
-            </form>
-        </div>
-
+    <!-- Contact Info -->
+    <div style="flex: 1 1 220px;">
+      <h2 style="color: #ffffff; margin-bottom: 20px; font-size: 24px;">📞 Contact</h2>
+      <p style="margin: 8px 0;"><i class="fa-solid fa-house" style="margin-right: 10px; color: #44b3b1;"></i>400008, Mumbai, INDIA</p>
+      <p style="margin: 8px 0;"><i class="fa-solid fa-phone" style="margin-right: 10px; color: #44b3b1;"></i>+91 1234567899</p>
     </div>
+
+    <!-- Help Section -->
+    <div style="flex: 1 1 220px;">
+      <h2 style="color: #ffffff; margin-bottom: 20px; font-size: 24px;">🛠️ Get Help</h2>
+      <a href="FAQ.html" style="display: block; margin-bottom: 12px; color: #bbb; text-decoration: none; transition: 0.3s;">FAQ</a>
+      <a href="payment.html" style="display: block; margin-bottom: 12px; color: #bbb; text-decoration: none; transition: 0.3s;">Payment Options</a>
+    </div>
+
+    <!-- Follow Us Section -->
+    <div style="flex: 1 1 220px;">
+      <h2 style="color: #ffffff; margin-bottom: 20px; font-size: 24px;">📱 Follow Us</h2>
+      <div style="display: flex; gap: 20px;">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=61573189641095"
+           style="color: #ccc; transition: 0.3s;"
+           onmouseover="this.style.color='#3b5998'"
+           onmouseout="this.style.color='#ccc'">
+          <i class="fa-brands fa-facebook-f fa-xl"></i>
+        </a>
+
+        <!-- Instagram -->
+        <a href="#"
+           style="color: #ccc; transition: 0.3s;"
+           onmouseover="this.style.color='#e1306c'"
+           onmouseout="this.style.color='#ccc'">
+          <i class="fa-brands fa-instagram fa-xl"></i>
+        </a>
+
+        <!-- X (Twitter) -->
+        <a href="https://x.com/G8256541Vrishab"
+           style="color: #ccc; transition: 0.3s;"
+           onmouseover="this.style.color='#1da1f2'"
+           onmouseout="this.style.color='#ccc'">
+          <i class="fa-brands fa-x-twitter fa-xl"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div style="flex: 1 1 300px;">
+      <h2 style="color: #ffffff; margin-bottom: 20px; font-size: 24px;">📬 Subscribe</h2>
+      <form action="/subscribe" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input type="email" name="email" placeholder="Your email here" required
+               style="padding: 12px; flex: 1; border: none; border-radius: 6px; font-size: 16px;">
+        <button type="submit"
+                style="padding: 12px 20px; background-color: #44b3b1; color: #111; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: 0.3s;">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Line -->
+  
+</footer>
+
 
     <div style="text-align: center; color: #666; font-size: 14px; margin-top: 40px;">
         <!-- <p>&copy; 2025 BidBazaar. All rights reserved.</p> -->

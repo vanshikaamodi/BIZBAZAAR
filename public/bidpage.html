@@ -1,211 +1,514 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Place Your Bid</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f9;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      background-color: #e0f7fa;
+      color: #333;
     }
+
     .container {
       max-width: 900px;
-      margin: auto;
-      background: #fff;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 40px;
       border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
     }
+
     h1 {
       text-align: center;
       color: #2c3e50;
-      margin-bottom: 20px;
-    }
-    .product-info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-size: 2.5em;
       margin-bottom: 30px;
+      font-weight: bold;
     }
-    .product-info img {
-      max-width: 300px;
+
+    .product-details {
+      display: flex;
+      margin-bottom: 40px;
+      gap: 30px;
+    }
+
+    .product-image {
+      flex: 0 0 40%;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: auto;
+      display: block;
       border-radius: 8px;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-info h2 {
+      font-size: 1.8em;
+      color: #34495e;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .product-info p {
+      color: #7f8c8d;
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+
+    .current-price {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: #e74c3c;
+      margin: 20px 0;
+    }
+
+    .current-price::before {
+      content: '₹';
+    }
+
+    .bid-section {
+      background-color: #f9f9f9;
+      padding: 25px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .bid-info {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 20px;
     }
-    .product-info h2 {
-      margin: 0;
-      color: #34495e;
+
+    .bid-info-item {
+      text-align: center;
     }
-    .product-info p {
-      margin: 5px 0;
+
+    .bid-info-label {
+      font-size: 0.9em;
       color: #7f8c8d;
     }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-      margin-bottom: 30px;
+
+    .bid-info-value {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #34495e;
+      margin-top: 5px;
     }
-    input[type="number"] {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-      border: 1px solid #ccc;
+
+    .bid-form {
+      margin-top: 20px;
+    }
+
+    .bid-form label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .bid-form input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
       border-radius: 5px;
+      font-size: 1.1em;
+      margin-bottom: 20px;
     }
-    button {
+
+    .bid-form input:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    .bid-btn {
       background-color: #27ae60;
       color: white;
-      padding: 12px 25px;
-      font-size: 16px;
+      padding: 14px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background-color 0.3s ease;
     }
-    button:hover {
+
+    .bid-btn:hover {
       background-color: #2ecc71;
     }
-    .bids-list {
+
+    .bid-btn:active {
+      background-color: #16a085;
+    }
+
+    .bid-history {
+      margin-top: 40px;
+    }
+
+    .bid-history h3 {
+      font-size: 1.4em;
+      color: #34495e;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .bid-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .bid-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .bidder-name {
+      font-weight: 600;
+      color: #34495e;
+    }
+
+    .bid-amount {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+
+    .bid-amount::before {
+      content: '₹';
+    }
+
+    .bid-time {
+      color: #95a5a6;
+      font-size: 0.9em;
+    }
+
+    .back-btn {
+      display: inline-block;
       margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
     }
-    .bids-list h3 {
-      color: #2c3e50;
+
+    .back-btn:hover {
+      background-color: #2980b9;
     }
-    .bid-entry {
-      background: #ecf0f1;
-      padding: 10px 15px;
-      margin-bottom: 10px;
-      border-radius: 6px;
+
+    .error-message {
+      color: #e74c3c;
+      background-color: #fadbd8;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .success-message {
+      color: #27ae60;
+      background-color: #d4f5e2;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .product-details {
+        flex-direction: column;
+      }
+
+      .product-image {
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+      }
+
+      .bid-info {
+        flex-direction: column;
+        gap: 15px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Place Your Bid</h1>
-
-    <div class="product-info" id="productInfo">
+    
+    <div id="errorMessage" class="error-message"></div>
+    <div id="successMessage" class="success-message"></div>
+    
+    <div class="product-details" id="productDetails">
       <!-- Product details will be loaded here -->
     </div>
-
-    <form id="bidForm">
-      <input type="number" id="bidAmount" placeholder="Enter your bid (₹)" required />
-      <button type="submit">Submit Bid</button>
-    </form>
-
-    <div class="bids-list">
-      <h3>Current Bids:</h3>
-      <div id="bidList">
-        <!-- Bids will appear here -->
+    
+    <div class="bid-section">
+      <div class="bid-info">
+        <div class="bid-info-item">
+          <div class="bid-info-label">Current Highest Bid</div>
+          <div class="bid-info-value" id="currentBid">Loading...</div>
+        </div>
+        <div class="bid-info-item">
+          <div class="bid-info-label">Minimum Bid Increment</div>
+          <div class="bid-info-value" id="minIncrement">₹100</div>
+        </div>
+        <div class="bid-info-item">
+          <div class="bid-info-label">Time Remaining</div>
+          <div class="bid-info-value" id="timeRemaining">Loading...</div>
+        </div>
       </div>
+      
+      <form class="bid-form" id="bidForm">
+        <label for="bidAmount">Your Bid Amount (₹)</label>
+        <input type="number" id="bidAmount" name="bidAmount" required min="0" step="100">
+        
+        <button type="submit" class="bid-btn">Place Bid</button>
+      </form>
     </div>
+    
+    <div class="bid-history">
+      <h3>Bid History</h3>
+      <ul class="bid-list" id="bidHistory">
+        <!-- Bid history will be loaded here -->
+      </ul>
+    </div>
+    
+    <a href="index.html" class="back-btn">Back to Auctions</a>
   </div>
 
   <script>
-    // Get productId, token, and userId from URL parameters and local storage
+    // Get product ID from URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id");
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-
-    if (!productId || !token || !userId) {
-      alert("Unauthorized access or missing product ID.");
-      window.location.href = "/"; // Redirect to home page if missing information
+    const productId = urlParams.get('productId');
+    
+    // Check if product ID exists
+    if (!productId) {
+      window.location.href = 'index.html';
     }
-
-    // Load product details using productId
-    fetch(`/api/products/${productId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (!data || !data.productName) {
-        throw new Error("Invalid product data received.");
+    
+    // Function to format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    // Function to calculate and display remaining time
+    function updateTimeRemaining(endTime) {
+      const now = new Date();
+      const end = new Date(endTime);
+      const diff = end - now;
+      
+      if (diff <= 0) {
+        document.getElementById('timeRemaining').textContent = 'Auction Ended';
+        document.querySelector('.bid-btn').disabled = true;
+        return;
       }
-
-      const info = document.getElementById("productInfo");
-      info.innerHTML = `
-        <img src="${data.imageURL}" alt="${data.productName}" />
-        <h2>${data.productName}</h2>
-        <p>${data.description}</p>
-        <p><strong>Base Price:</strong> ₹${data.price}</p>
-        <p><strong>Seller:</strong> ${data.sellerName}</p>
-        <p><strong>Auction Duration:</strong> ${data.auctionDuration} days</p>
-      `;
-    })
-    .catch(err => {
-      alert("❌ Failed to load product details.");
-      console.error(err);
-    });
-
-    // Submit a new bid
-    document.getElementById("bidForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const bidAmount = document.getElementById("bidAmount").value;
-
-      fetch(`/api/bids`, {
-        method: "POST",
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      
+      let timeString = '';
+      if (days > 0) {
+        timeString += `${days}d `;
+      }
+      timeString += `${hours}h ${minutes}m`;
+      
+      document.getElementById('timeRemaining').textContent = timeString;
+    }
+    
+    // Function to load product details
+    function loadProductDetails() {
+      fetch(`/api/product/${productId}`, {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          productId, // Sending the correct productId
-          userId,
-          bidAmount
-        })
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
       })
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         if (data.success) {
-          alert("✅ Bid placed successfully!");
-          document.getElementById("bidAmount").value = "";
-          loadBids(); // Refresh bid list
+          const product = data.product;
+          
+          // Populate product details
+          const productDetailsDiv = document.getElementById('productDetails');
+          productDetailsDiv.innerHTML = `
+            <div class="product-image">
+              <img src="${product.imageURL}" alt="${product.productName}">
+            </div>
+            <div class="product-info">
+              <h2>${product.productName}</h2>
+              <p>${product.description}</p>
+              <p>Seller: ${product.sellerName}</p>
+              <p class="current-price">${product.currentBid}</p>
+            </div>
+          `;
+          
+          // Set current bid
+          document.getElementById('currentBid').textContent = `₹${product.currentBid}`;
+          
+          // Set minimum bid amount in the input field
+          const minBidAmount = product.currentBid + 100; // Assuming ₹100 increment
+          document.getElementById('bidAmount').value = minBidAmount;
+          document.getElementById('bidAmount').min = minBidAmount;
+          
+          // Update time remaining
+          updateTimeRemaining(product.auctionEndTime);
+          setInterval(() => updateTimeRemaining(product.auctionEndTime), 60000); // Update every minute
+          
+          // Load bid history
+          loadBidHistory();
         } else {
-          alert("❌ " + (data.message || "Failed to place bid."));
+          showError('Error loading product: ' + data.message);
         }
       })
-      .catch(err => {
-        console.error("❌ Bid submission error:", err);
-        alert("❌ Something went wrong while placing the bid.");
-      });
-    });
-
-    // Load existing bids
-    function loadBids() {
-      fetch(`/api/bids/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        const bidList = document.getElementById("bidList");
-        bidList.innerHTML = "";
-
-        if (!data.bids || data.bids.length === 0) {
-          bidList.innerHTML = "<p>No bids yet. Be the first to bid!</p>";
-          return;
-        }
-
-        data.bids.forEach(bid => {
-          const div = document.createElement("div");
-          div.className = "bid-entry";
-          div.innerHTML = `<strong>${bid.bidderName}</strong>: ₹${bid.bidAmount}`;
-          bidList.appendChild(div);
-        });
-      })
-      .catch(err => {
-        console.error("❌ Failed to load bids:", err);
-        document.getElementById("bidList").innerHTML = "<p>Unable to load bids.</p>";
+      .catch(error => {
+        console.error('Error:', error);
+        showError('Failed to load product details. Please try again later.');
       });
     }
-
-    // Load bids on page load
-    loadBids();
+    
+    // Function to load bid history
+    function loadBidHistory() {
+      fetch(`/api/bids/${productId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const bidHistoryList = document.getElementById('bidHistory');
+          bidHistoryList.innerHTML = '';
+          
+          if (data.bids.length === 0) {
+            bidHistoryList.innerHTML = '<p>No bids placed yet. Be the first to bid!</p>';
+            return;
+          }
+          
+          data.bids.forEach(bid => {
+            const bidItem = document.createElement('li');
+            bidItem.classList.add('bid-item');
+            
+            bidItem.innerHTML = `
+              <span class="bidder-name">${bid.bidderName}</span>
+              <span class="bid-amount">${bid.amount}</span>
+              <span class="bid-time">${formatDate(bid.timestamp)}</span>
+            `;
+            
+            bidHistoryList.appendChild(bidItem);
+          });
+        } else {
+          console.error('Error loading bid history:', data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+    
+    // Function to show error message
+    function showError(message) {
+      const errorElement = document.getElementById('errorMessage');
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        errorElement.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Function to show success message
+    function showSuccess(message) {
+      const successElement = document.getElementById('successMessage');
+      successElement.textContent = message;
+      successElement.style.display = 'block';
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        successElement.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Handle bid form submission
+    document.getElementById('bidForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const bidAmount = parseInt(document.getElementById('bidAmount').value);
+      const currentBid = parseInt(document.getElementById('currentBid').textContent.replace('₹', ''));
+      
+      if (bidAmount <= currentBid) {
+        showError('Your bid must be higher than the current bid.');
+        return;
+      }
+      
+      // Submit bid to server
+      fetch('/api/placeBid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          productId: productId,
+          bidAmount: bidAmount
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          showSuccess('Your bid has been placed successfully!');
+          
+          // Update current bid display
+          document.getElementById('currentBid').textContent = `₹${bidAmount}`;
+          
+          // Update product price display
+          const priceElement = document.querySelector('.current-price');
+          if (priceElement) {
+            priceElement.textContent = bidAmount;
+          }
+          
+          // Update minimum bid amount in the input field
+          const newMinBid = bidAmount + 100; // Assuming ₹100 increment
+          document.getElementById('bidAmount').value = newMinBid;
+          document.getElementById('bidAmount').min = newMinBid;
+          
+          // Reload bid history
+          loadBidHistory();
+        } else {
+          showError('Error placing bid: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showError('Failed to place bid. Please try again later.');
+      });
+    });
+    
+    // Load product details on page load
+    window.onload = loadProductDetails;
   </script>
 </body>
 </html>
