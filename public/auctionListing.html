@@ -5,6 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auction Listing</title>
   <style>
+
+    .image-container {
+      position: relative;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      width: 180px;
+      height: 180px;
+      overflow: hidden; /* so the zoom stays inside the box */
+      z-index: 0;
+    }
+    
+    .product img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    
+    .image-container:hover img {
+      transform: scale(1.5);
+      z-index: 10;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      cursor: zoom-in;
+    }
+    
     body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
@@ -80,9 +106,11 @@
     }
 
     .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      transform: scale(1.05) translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      z-index: 10;
     }
+    
 
     /* Image container for zoom effect */
     .image-container {
@@ -106,11 +134,13 @@
 
     /* Enhanced pop-out zoom effect on hover */
     .image-container:hover img {
-      transform: scale(1.5);
-      z-index: 100;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
+      transform: scale(1.7);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+      cursor: zoom-in;
+      position: relative;
+      z-index: 10;
     }
+    
 
     .product-details {
       text-align: center;

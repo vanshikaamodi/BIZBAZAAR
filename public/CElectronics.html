@@ -9,7 +9,7 @@
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(120deg, #cbcdbb,#2d7470);
+      background: linear-gradient(120deg, #cbcdbb, #2d7470);
       color: #333;
     }
 
@@ -142,6 +142,56 @@
         width: auto;
       }
     }
+
+    /* Modal styles */
+    #bidModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #bidModalContent {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+    }
+
+    #closeModal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #333;
+    }
+
+    #bidModalContent img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    #bidModalContent button {
+      background-color: #7aa4a7;
+      color: white;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -150,62 +200,33 @@
     <div id="productList"></div>
   </div>
 
+  <!-- Modal Section -->
+  <div id="bidModal">
+    <div id="bidModalContent">
+      <span id="closeModal">&times;</span>
+      <h2 id="modalProductName"></h2>
+      <img id="modalProductImage" src="" alt="">
+      <p id="modalProductDesc"></p>
+      <p><strong>Price:</strong> ₹<span id="modalProductPrice"></span></p>
+      <p><strong>Seller:</strong> <span id="modalProductSeller"></span></p>
+      <p><strong>Duration:</strong> <span id="modalProductDuration"></span> days</p>
+      <button>Confirm Bid</button>
+    </div>
+  </div>
+
   <script>
     const antiqueElectronicsData = [
-      {
-        name: 'Vintage Radio',
-        description: 'Classic wooden radio with analog tuning.',
-        price: 4500,
-        imageURL: 'img/radio.jpg',
-        sellerName: 'RetroRadioHub',
-        auctionDuration: 8,
-      },
-      {
-        name: 'Old Typewriter',
-        description: 'Fully functional antique typewriter.',
-        price: 6500,
-        imageURL: 'img/typewriter.jpeg',
-        sellerName: 'TypeKing',
-        auctionDuration: 10,
-      },
-      {
-        name: 'Rotary Dial Phone',
-        description: 'Classic rotary phone from the 70s.',
-        price: 3000,
-        imageURL: 'img/phone.jpg',
-        sellerName: 'ClassicCallers',
-        auctionDuration: 7,
-      },
-      {
-        name: 'Vintage Camera',
-        description: 'Retro film camera in working condition.',
-        price: 7200,
-        imageURL: 'img/camera.jpg',
-        sellerName: 'SnapEra',
-        auctionDuration: 9,
-      },
-      {
-        name: 'Reel Tape Recorder',
-        description: 'Old school reel tape player, fully functional.',
-        price: 8900,
-        imageURL: 'img/recorder.webp',
-        sellerName: 'ReelRevive',
-        auctionDuration: 6,
-      },
-      {
-        name: 'CRT Television',
-        description: 'Vintage box TV with working AV ports.',
-        price: 5500,
-        imageURL: 'img/tv.webp',
-        sellerName: 'BoxTVDepot',
-        auctionDuration: 11,
-      }
+      { name: 'Vintage Radio', description: 'Classic wooden radio with analog tuning.', price: 4500, imageURL: 'img/radio.jpg', sellerName: 'RetroRadioHub', auctionDuration: 8 },
+      { name: 'Old Typewriter', description: 'Fully functional antique typewriter.', price: 6500, imageURL: 'img/typewriter.jpeg', sellerName: 'TypeKing', auctionDuration: 10 },
+      { name: 'Rotary Dial Phone', description: 'Classic rotary phone from the 70s.', price: 3000, imageURL: 'img/phone.jpg', sellerName: 'ClassicCallers', auctionDuration: 7 },
+      { name: 'Vintage Camera', description: 'Retro film camera in working condition.', price: 7200, imageURL: 'img/camera.jpg', sellerName: 'SnapEra', auctionDuration: 9 },
+      { name: 'Reel Tape Recorder', description: 'Old school reel tape player, fully functional.', price: 8900, imageURL: 'img/recorder.webp', sellerName: 'ReelRevive', auctionDuration: 6 },
+      { name: 'CRT Television', description: 'Vintage box TV with working AV ports.', price: 5500, imageURL: 'img/tv.webp', sellerName: 'BoxTVDepot', auctionDuration: 11 }
     ];
 
     function displayAntiqueElectronics() {
       const productList = document.getElementById('productList');
       productList.innerHTML = '';
-
       antiqueElectronicsData.forEach(product => {
         const productCard = document.createElement('div');
         productCard.classList.add('product');
@@ -244,14 +265,32 @@
         bidButton.classList.add('bid-btn');
         bidButton.textContent = 'Place Bid';
         bidButton.onclick = function () {
-          alert(`Placing bid for ${product.name}`);
+          document.getElementById('bidModal').style.display = 'flex';
+          document.getElementById('modalProductName').textContent = product.name;
+          document.getElementById('modalProductImage').src = product.imageURL;
+          document.getElementById('modalProductImage').alt = product.name;
+          document.getElementById('modalProductDesc').textContent = product.description;
+          document.getElementById('modalProductPrice').textContent = product.price;
+          document.getElementById('modalProductSeller').textContent = product.sellerName;
+          document.getElementById('modalProductDuration').textContent = product.auctionDuration;
         };
-
         productDetails.appendChild(bidButton);
         productCard.appendChild(productDetails);
         productList.appendChild(productCard);
       });
     }
+
+    // Close modal
+    document.getElementById('closeModal').onclick = function () {
+      document.getElementById('bidModal').style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+      const modal = document.getElementById('bidModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
 
     window.onload = displayAntiqueElectronics;
   </script>
