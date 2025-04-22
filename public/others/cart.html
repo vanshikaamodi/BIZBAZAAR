@@ -4,12 +4,6 @@
   <meta charset="UTF-8">
   <title>BidBazaar - Cart</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(120deg, #ffffff,#2d7470);
@@ -24,19 +18,12 @@
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       text-align: center;
       font-size: 2.2rem;
       margin-bottom: 30px;
-      color: #222;
     }
 
     .cart-item {
@@ -69,19 +56,13 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin: 10px 5px 0 0;
+      margin-top: 10px;
     }
 
     .btn:hover {
       background-color: #e66000;
       transform: translateY(-2px);
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .btn:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
-      box-shadow: none;
     }
 
     #empty-message {
@@ -96,12 +77,6 @@
       font-size: 1.3rem;
       color: #444;
       text-align: center;
-    }
-
-    .divider {
-      height: 2px;
-      background: #eee;
-      margin: 40px 0;
     }
 
     .info-box {
@@ -120,7 +95,6 @@
 
   <div class="container">
     <h1>Your Cart</h1>
-
     <div id="cart-items"></div>
     <p id="empty-message">🛒 Your cart is empty. Win an auction to see items here!</p>
 
@@ -128,38 +102,25 @@
       <button class="btn" onclick="checkout()" id="checkout-btn" disabled>Proceed to Checkout</button>
     </div>
 
-    <div class="divider"></div>
-
     <p class="section-title">Checkout Summary</p>
 
-    <div style="margin-top: 20px;">
-      <h3 style="margin-bottom: 10px;">Delivery Details</h3>
-      <div class="info-box">
-        <p><strong>Name:</strong> Vanshikaa Modi</p>
-        <p><strong>Address:</strong> 103, Rosewood Villa, MG Road, Mumbai - 400001</p>
-        <p><strong>Phone:</strong> +91 98765 43210</p>
-        <p><strong>Expected Delivery:</strong> 4-6 Business Days</p>
-      </div>
+    <div class="info-box">
+      <p><strong>Name:</strong> Vanshikaa Modi</p>
+      <p><strong>Address:</strong> 103, Rosewood Villa, MG Road, Mumbai - 400001</p>
+      <p><strong>Phone:</strong> +91 98765 43210</p>
+      <p><strong>Expected Delivery:</strong> 4-6 Business Days</p>
     </div>
 
-    <div style="margin-top: 30px;">
-      <h3 style="margin-bottom: 10px;">Price Details</h3>
-      <div class="info-box">
-        <p><strong>Items Total:</strong> ₹<span id="total-price">0</span></p>
-        <p><strong>Delivery Charges:</strong> ₹49</p>
-        <hr style="margin: 15px 0;">
-        <p style="font-weight: 600; font-size: 1.1rem;">Total Amount: ₹<span id="final-amount">0</span></p>
-      </div>
+    <div class="info-box" style="margin-top: 20px;">
+      <p><strong>Items Total:</strong> ₹<span id="total-price">0</span></p>
+      <p><strong>Delivery Charges:</strong> ₹49</p>
+      <hr style="margin: 15px 0;">
+      <p style="font-weight: 600;">Total Amount: ₹<span id="final-amount">0</span></p>
     </div>
   </div>
 
   <script>
-    let cart = [];
-
-    function addToCart(productName, price) {
-      cart.push({ name: productName, price: price });
-      renderCart();
-    }
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     function renderCart() {
       const cartContainer = document.getElementById('cart-items');
@@ -179,16 +140,18 @@
       } else {
         emptyMsg.style.display = 'none';
         checkoutBtn.disabled = false;
+
         cart.forEach((item, index) => {
           total += item.price;
           const div = document.createElement('div');
           div.className = 'cart-item';
           div.innerHTML = `
             <div class="cart-item-details">${index + 1}. ${item.name}</div>
-            <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+            <div class="cart-item-price">₹${item.price}</div>
           `;
           cartContainer.appendChild(div);
         });
+
         totalPriceElem.textContent = total.toLocaleString();
         finalAmountElem.textContent = (total + 49).toLocaleString();
       }
@@ -196,13 +159,7 @@
 
     function checkout() {
       alert('Proceeding to checkout with ' + cart.length + ' item(s).');
-      // Add server-side logic here if needed
+      // Server logic can be added here
     }
 
-    // Dummy items for demo - you can remove or trigger addToCart from real auction
-    addToCart('Antique Compass', 7800);
-    addToCart('Victorian Mirror', 12400);
-  </script>
-
-</body>
-</html>
+    window.onload = render

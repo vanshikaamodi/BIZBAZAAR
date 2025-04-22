@@ -9,7 +9,7 @@
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #e0f7fa;
+      background: linear-gradient(120deg, #ececda,#2d7470);
       color: #333;
     }
 
@@ -39,7 +39,7 @@
     }
 
     .product {
-      background: #ffffff;
+      background: #b0c3c5;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       padding: 20px;
@@ -82,7 +82,7 @@
     .product-details .price {
       font-size: 1.4em;
       font-weight: 600;
-      color: #e74c3c;
+      color: #6e8889;
       margin-top: 10px;
     }
 
@@ -103,7 +103,7 @@
     }
 
     .bid-btn {
-      background-color: #27ae60;
+      background-color: #5a8a8c;
       color: white;
       padding: 12px 18px;
       border: none;
@@ -116,7 +116,7 @@
     }
 
     .bid-btn:hover {
-      background-color: #2ecc71;
+      background-color: #557e82;
     }
 
     .bid-btn:active {
@@ -152,14 +152,14 @@
     </div>
   </div>
 
-  <script>
+  <!-- <script>
     // Example data for Jewellery items
     const jewelleryData = [
       {
         name: 'Gold Necklace',
         description: 'A beautiful gold necklace for special occasions.',
         price: 15000,
-        imageURL: 'https://example.com/images/gold-necklace.jpg',
+        imageURL: 'public/img/gold.jpg',
         sellerName: 'JewelleryStore',
         auctionDuration: 10,
       },
@@ -293,6 +293,146 @@
 
     // Display the jewellery items when the page loads
     window.onload = displayJewelleryItems;
+  </script> -->
+
+  <script>
+    const jewelleryData = [
+  {
+    name: 'Gold Necklace',
+    description: 'A beautiful gold necklace for special occasions.',
+    price: 200000,
+    imageURL: 'img/gold.jpg',
+    sellerName: 'JewelleryStore',
+    auctionDuration: 10,
+  },
+  {
+    name: 'Diamond Ring',
+    description: 'An elegant diamond ring for weddings.',
+    price: 250000,
+    imageURL: 'img/diamond.avif',
+    sellerName: 'DiamondWorld',
+    auctionDuration: 5,
+  },
+  {
+    name: 'Silver Earrings',
+    description: 'Handcrafted silver earrings with intricate designs.',
+    price: 5000,
+    imageURL: 'img/silver.webp',
+    sellerName: 'EarringsShop',
+    auctionDuration: 7,
+  },
+  {
+    name: 'Platinum Bracelet',
+    description: 'A sophisticated platinum bracelet for a chic look.',
+    price: 30000,
+    imageURL: 'img/platinum.jpg',
+    sellerName: 'PlatinumLux',
+    auctionDuration: 15,
+  },
+  {
+    name: 'Ruby Pendant',
+    description: 'A stunning ruby pendant with gold chain.',
+    price: 12000,
+    imageURL: 'img/ruby.jpg',
+    sellerName: 'RubyGems',
+    auctionDuration: 12,
+  },
+  {
+    name: 'Emerald Ring',
+    description: 'An exquisite emerald ring with silver band.',
+    price: 18000,
+    imageURL: 'img/emerald.jpeg',
+    sellerName: 'GemsShop',
+    auctionDuration: 8,
+  },
+  {
+    name: 'Sapphire Earrings',
+    description: 'Elegant sapphire earrings set in sterling silver.',
+    price: 7000,
+    imageURL: 'https://cdn.pixabay.com/photo/2016/11/29/12/54/sapphire-1862698_1280.jpg',
+    sellerName: 'SapphireStore',
+    auctionDuration: 6,
+  },
+  {
+    name: 'Pearl Necklace',
+    description: 'A classic pearl necklace perfect for formal events.',
+    price: 16000,
+    imageURL: 'https://cdn.pixabay.com/photo/2018/03/03/22/12/pearls-3197636_1280.jpg',
+    sellerName: 'PearlBoutique',
+    auctionDuration: 14,
+  },
+  {
+    name: 'Opal Brooch',
+    description: 'A vintage opal brooch with intricate gold detailing.',
+    price: 8000,
+    imageURL: 'https://cdn.pixabay.com/photo/2017/05/25/21/27/jewelry-2341213_1280.jpg',
+    sellerName: 'VintageJewels',
+    auctionDuration: 9,
+  },
+  {
+    name: 'Citrine Ring',
+    description: 'A radiant citrine gemstone ring with gold band.',
+    price: 10000,
+    imageURL: 'https://cdn.pixabay.com/photo/2015/03/30/12/36/gemstone-698067_1280.jpg',
+    sellerName: 'GemstoneHub',
+    auctionDuration: 11,
+  },
+];
+
+  
+    function displayJewelleryItems() {
+      const productList = document.getElementById('productList');
+      productList.innerHTML = '';
+  
+      jewelleryData.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product');
+  
+        const productImage = document.createElement('img');
+        productImage.src = product.imageURL;
+        productImage.alt = product.name;
+        productCard.appendChild(productImage);
+  
+        const productDetails = document.createElement('div');
+        productDetails.classList.add('product-details');
+  
+        const productName = document.createElement('h2');
+        productName.textContent = product.name;
+        productDetails.appendChild(productName);
+  
+        const productDescription = document.createElement('p');
+        productDescription.textContent = product.description;
+        productDetails.appendChild(productDescription);
+  
+        const productPrice = document.createElement('p');
+        productPrice.classList.add('price');
+        productPrice.textContent = product.price;
+        productDetails.appendChild(productPrice);
+  
+        const auctionDuration = document.createElement('p');
+        auctionDuration.textContent = `Auction Duration: ${product.auctionDuration} days`;
+        productDetails.appendChild(auctionDuration);
+  
+        const sellerInfo = document.createElement('p');
+        sellerInfo.classList.add('seller-info');
+        sellerInfo.textContent = `Seller: ${product.sellerName}`;
+        productDetails.appendChild(sellerInfo);
+  
+        const bidButton = document.createElement('button');
+        bidButton.classList.add('bid-btn');
+        bidButton.textContent = 'Place Bid';
+        bidButton.onclick = function () {
+          alert(`Placing bid for ${product.name}`);
+        };
+  
+        productDetails.appendChild(bidButton);
+        productCard.appendChild(productDetails);
+        productList.appendChild(productCard);
+      });
+    }
+  
+    window.onload = displayJewelleryItems;
   </script>
+  
 </body>
 </html>

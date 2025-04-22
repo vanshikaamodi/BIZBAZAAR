@@ -29,7 +29,7 @@ body {
 
 /* Header */
 header {
-  background-color: #fceec4;
+  background-color: #faf2db;
   color: #222;
   display: flex;
   justify-content: space-between;
@@ -96,7 +96,7 @@ header .user-actions a:hover {
 /* Hero Section */
 .hero {
   background: linear-gradient(135deg, #a0dad7, #76abae);
-  color: #fff;
+  color: #014b4f;
   padding: 120px 20px;
   text-align: center;
 }
